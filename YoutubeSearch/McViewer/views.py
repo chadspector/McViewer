@@ -51,3 +51,6 @@ def index(request):
 
     return render(request, 'McViewer/login.html', context)
 # Create your views here.
+def login(request):
+    return render(request, 'McViewer/login.html')
+# Create your views here.
