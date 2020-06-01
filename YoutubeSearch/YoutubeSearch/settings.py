@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/3.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
-
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -31,7 +30,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'McViewer',
+    'McViewer.apps.McviewerConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

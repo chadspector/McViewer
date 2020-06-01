@@ -1,6 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
 
-# Create your models here.
-# class User(models.Model):
-#     username = models.CharField(max_length=100,default="None")
-#     password = models.CharField(max_length=100,default="None")
+#Create your models here.
+
+class Video(models.Model):
+    user = models.ManyToManyField(User, null=0, default="None")
