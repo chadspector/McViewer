@@ -8,7 +8,7 @@ import datetime
 class Video(models.Model):
     thumbnail = models.ImageField(upload_to='video_thumbnails', blank=True)
     title = models.CharField(max_length=255,default="None")
-    duration = models.DurationField()
+    duration = models.CharField(max_length=255,default="None")
     creator = models.CharField(max_length=255,default="None")
     link = models.CharField(max_length=255,default="None")
     description = models.CharField(max_length=1000,default="None")
