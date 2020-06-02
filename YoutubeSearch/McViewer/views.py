@@ -6,8 +6,6 @@ from django.shortcuts import render
 from django.config import settings
 from django.http import HttpResponse
 
-<<<<<<< HEAD
-=======
 def index(request):
     search_url = 'https://www.googleapis.com/youtube/v3/search'
     video_url = 'https://www.googleapis.com/youtube/v3/videos'
@@ -55,6 +53,5 @@ def index(request):
 # Create your views here.
 def login(request):
     return render(request, 'McViewer/login.html')
->>>>>>> f7ddc433b741c954be614aafa6663fb9ed23d635
 # Create your views here.
 
