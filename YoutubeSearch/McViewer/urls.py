@@ -1,11 +1,11 @@
 from django.contrib import admin
 from django.urls import path, include
-from . import home
+from . import views
 from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path('login', home.login, name="login"),
-    path('sign_up', home.signUp, name="sign_up"),
-    path('homepage', home.homeView, name="home_page")
+    path('login', views.login, name="login"),
+    path('sign_up', views.signUp, name="sign_up"),
+    path('homepage', views.homeView, name="home_page")
 ]
