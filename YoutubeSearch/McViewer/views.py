@@ -69,19 +69,9 @@ def signUp(request):
 
     return render(request, 'sign_up.html')
 def login(request):
-<<<<<<< HEAD
     
     return render(request, 'sign_in.html')
-
-def signUp(request):
-    
-    return render(request, 'sign_up.html')
 
 def searchResult(request):
     
     return render(request, 'search.html')
-=======
-    return render(request, 'McViewer/login.html')
-# Create your views here.
-
->>>>>>> 8ad19a3b2a333c6c8ca948541eddfda28db26f50
