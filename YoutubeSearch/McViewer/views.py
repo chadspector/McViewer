@@ -52,5 +52,8 @@ def search(request):
     return render(request, 'home_page.html', context)
 # Create your views here.
 def login(request):
-    return render(request, 'login.html')
+    return render(request, 'sign_in.html')
 # Create your views here.
+
+def signUp(request):
+    return render(request, 'sign_up.html')
