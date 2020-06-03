@@ -20,7 +20,7 @@ def index(request):
     
     results = res.json()['items']
 
-    for results in results:
+    for result in results:
         video_ids.append(result['id']['videoId'])    
 
     video_params = {
@@ -34,7 +34,7 @@ def index(request):
     results = res.json()['items']
 
     videos = []
-    for results in results:
+    for result in results:
         video_data = {
             'title' : result['snippet']['title'],
             'id' : result['id'],
