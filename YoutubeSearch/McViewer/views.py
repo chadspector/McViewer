@@ -10,7 +10,7 @@ def index(request):
     search_url = 'https://www.googleapis.com/youtube/v3/search'
     video_url = 'https://www.googleapis.com/youtube/v3/videos'
 
-     search_params = {
+    search_params = {
         'part' : 'snippet',
         'q' : 'learn python',
         'key' : settings.YOUTUBE_API_KEY,
@@ -54,13 +54,20 @@ def index(request):
 
 def signUp(request):
     if request.method == "POST" and "submitProfile" in request.POST:
-        first_name = request.POST.get("first_name")
-        last_name = request.POST.get("last_name")
+        the_first_name = request.POST.get("first_name")
+        the_last_name = request.POST.get("last_name")
         username = request.POST.get("user_name")
-        password = request.POST.get("password")
+        raw_password = request.POST.get("password")
 
-        User.objects.create_user(username)
+        user = User.objects.create_user(username, first_name = the_first_name, last_name = the_last_name, password = raw_password)
+        user.save()
+        UserProfile.objects.create(
+            user = user
 
+        )
+        return redirect('login')
+
+    return render(request, 'sign_up.html')
 def login(request):
     return render(request, 'McViewer/login.html')
 # Create your views here.
