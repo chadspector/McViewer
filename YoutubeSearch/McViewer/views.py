@@ -1,20 +1,18 @@
 import requests
-
 from isodate import parse_duration
-
 from django.shortcuts import render
-from django.config import settings
+from django.conf import settings
 from django.http import HttpResponse
 
 def index(request):
     search_url = 'https://www.googleapis.com/youtube/v3/search'
     video_url = 'https://www.googleapis.com/youtube/v3/videos'
 
-     search_params = {
+    search_params = {
         'part' : 'snippet',
         'q' : 'learn python',
         'key' : settings.YOUTUBE_API_KEY,
-        'maxResults' : 9,
+        'maxResults' : 6,
         'type' : 'video'
     }
     video_ids = []
@@ -29,7 +27,7 @@ def index(request):
         'key' : settings.YOUTUBE_API_KEY,
         'part' : 'snippet,contentDetails',
         'id' : ','.join(video_ids),
-        'maxResults' : 9
+        'maxResults' : 6
     }
     res = requests.get(search_url, params = video_params)
 
@@ -39,8 +37,8 @@ def index(request):
     for results in results:
         video_data = {
             'title' : result['snippet']['title'],
-            'id' : result['id']
-            'duration' : parse_duration(result['contentDetails']['duration'])
+            'id' : result['id'],
+            'duration' : parse_duration(result['contentDetails']['duration']),
             'thumbnail' : result['snippet']['thumbnails']['high']['url']
         }
         videos.append(video_data)
@@ -62,7 +60,6 @@ def signUp(request):
         User.objects.create_user(username)
 
 def login(request):
-<<<<<<< HEAD
     
     return render(request, 'sign_in.html')
 
@@ -73,8 +70,6 @@ def signUp(request):
 def searchResult(request):
     
     return render(request, 'search.html')
-=======
-    return render(request, 'McViewer/login.html')
-# Create your views here.
 
->>>>>>> 8ad19a3b2a333c6c8ca948541eddfda28db26f50
+
+
