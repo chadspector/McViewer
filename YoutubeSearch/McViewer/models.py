@@ -19,6 +19,6 @@ class Search(models.Model):
     text = models.CharField(max_length=255,default="None")
 
 class UserProfile(models.Model):
-    display_picture = models.ImageField(upload_to='profile_image', blank=True)
+    display_picture = models.ImageField(upload_to='profile_image', blank=True, null = True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True) 
-    search = models.ForeignKey(Search, on_delete=models.CASCADE)
+    search = models.ForeignKey(Search, on_delete=models.CASCADE, null = True)

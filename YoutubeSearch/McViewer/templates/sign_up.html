@@ -43,7 +43,8 @@
           </p>
 
           <!-- Form -->
-          <form>
+          <form method="POST">
+            {% csrf_token %}
 
             <!-- First Name -->
             <div class="form-group">
@@ -54,7 +55,7 @@
               </label>
 
               <!-- Input -->
-              <input type="text" class="form-control" placeholder="David">
+              <input name="first_name" type="text" class="form-control" placeholder="David">
 
             </div>
 
@@ -67,7 +68,7 @@
               </label>
 
               <!-- Input -->
-              <input type="text" class="form-control" placeholder="TheGay">
+              <input name="last_name" type="text" class="form-control" placeholder="TheGay">
 
             </div>
             
@@ -80,7 +81,7 @@
               </label>
 
               <!-- Input -->
-              <input type="text" class="form-control" placeholder="JonSmith123">
+              <input name="username" type="text" class="form-control" placeholder="JonSmith123">
 
             </div>
 
@@ -93,7 +94,7 @@
               </label>
 
               <!-- Input -->
-              <input type="email" class="form-control" placeholder="name@address.com">
+              <input name="email" type="email" class="form-control" placeholder="name@address.com">
 
             </div>
 
@@ -109,7 +110,7 @@
               <div class="input-group input-group-merge">
 
                 <!-- Input -->
-                <input type="password" class="form-control form-control-appended" placeholder="Enter your password">
+                <input name="password" type="password" class="form-control form-control-appended" placeholder="Enter your password">
 
                 <!-- Icon -->
                 <div class="input-group-append">
@@ -122,14 +123,14 @@
             </div>
 
             <!-- Submit -->
-            <button class="btn btn-lg btn-block btn-primary mb-3">
+            <button name = "submitProfile" class="btn btn-lg btn-block btn-primary mb-3">
               Sign up
             </button>
 
             <!-- Link -->
             <div class="text-center">
               <small class="text-muted text-center">
-                Already have an account? <a href="sign-in.html">Log in</a>.
+                Already have an account? <a href="{% url 'login' %}">Log in</a>.
               </small>
             </div>
 
