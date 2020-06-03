@@ -9,4 +9,4 @@ urlpatterns = [
     path('', include('McViewer.urls')),
 
     path('', TemplateView.as_view(template_name='base.html')),
-] + static(setting.MEDIA_URL, document_root=setting.MEDIA_ROOT)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

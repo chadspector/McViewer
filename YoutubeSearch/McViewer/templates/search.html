@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="search_container" style="display:flex; flex-flow:row; justify-content: flex-start ">
+    <div class="large_video" style="width: 65%">
+        <div class="card">
+
+            <!-- Image -->
+            <a href="project-overview.html">
+                <img src="assets/img/avatars/projects/project-1.jpg" alt="..." class="card-img-top">
+            </a>
+
+            <!-- Body -->
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col">
+
+                        <!-- Title -->
+                        <h4 class="mb-2 name">
+                            <a href="project-overview.html">Homepage Redesign</a>
+                        </h4>
+
+                        <!-- Subtitle -->
+                        <p class="card-text small text-muted">
+                            Updated 4hr ago
+                        </p>
+
+                    </div>
+                    <div class="col-auto">
+
+                        <!-- Dropdown -->
+                        <div class="dropdown">
+                            <a href="#" class="dropdown-ellipses dropdown-toggle" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="fe fe-more-vertical"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a href="#!" class="dropdown-item">
+                                    Action
+                                </a>
+                                <a href="#!" class="dropdown-item">
+                                    Another action
+                                </a>
+                                <a href="#!" class="dropdown-item">
+                                    Something else here
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div> <!-- / .row -->
+            </div>
+
+        </div>
+    </div>
+    <div class="up_next_videos" style="width: 30%; margin-left: 2em;">
+        <div class="card">
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+
+                        <!-- Avatar -->
+                        <a href="project-overview.html" class="avatar avatar-lg avatar-4by3">
+                            <img src="assets/img/avatars/projects/project-1.jpg" alt="..." class="avatar-img rounded">
+                        </a>
+
+                    </div>
+                    <div class="col ml-n2">
+
+                        <!-- Title -->
+                        <h4 class="mb-1 name">
+                            <a href="project-overview.html">Homepage Redesign</a>
+                        </h4>
+
+                        <!-- Text -->
+                        <p class="card-text small text-muted mb-1">
+                            <time datetime="2018-06-21">Updated 2hr ago</time>
+                        </p>
+
+
+                    </div>
+
+                    <div class="col-auto">
+
+                        <!-- Dropdown -->
+                        <div class="dropdown">
+                            <a href="#" class="dropdown-ellipses dropdown-toggle" role="button" data-toggle="dropdown"
+                                aria-haspopup="true" aria-expanded="false">
+                                <i class="fe fe-more-vertical"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-right">
+                                <a href="#!" class="dropdown-item">
+                                    Action
+                                </a>
+                                <a href="#!" class="dropdown-item">
+                                    Another action
+                                </a>
+                                <a href="#!" class="dropdown-item">
+                                    Something else here
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div> <!-- / .row -->
+            </div> <!-- / .card-body -->
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock content %}
+
+
+
+{% block javascript %}
+
+
+{% endblock javascript %}
