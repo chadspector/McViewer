@@ -6,9 +6,13 @@ import datetime
 
 #Create your models here.
 class Video(models.Model):
-    thumbnail = models.ImageField(upload_to='video_thumbnails', blank=True)
+    thumbnail = models.ImageField(upload_to='thumbnails/', blank=True)
     title = models.CharField(max_length=255,default="None")
+<<<<<<< HEAD
     duration = models.CharField(max_length=255,default="None")
+=======
+    duration = models.DurationField(default="None")
+>>>>>>> origin/chad
     creator = models.CharField(max_length=255,default="None")
     link = models.CharField(max_length=255,default="None")
     description = models.CharField(max_length=1000,default="None")
@@ -19,6 +23,6 @@ class Search(models.Model):
     text = models.CharField(max_length=255,default="None")
 
 class UserProfile(models.Model):
-    display_picture = models.ImageField(upload_to='profile_image', blank=True)
+    display_picture = models.ImageField(upload_to='profile_images/', blank=True)
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True) 
     search = models.ForeignKey(Search, on_delete=models.CASCADE)

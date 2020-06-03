@@ -18,9 +18,9 @@ def index(request):
     video_ids = []
     res = requests.get(search_url, params = search_params)
     
-    results = res.json()['items']
+    search_results = res.json()['items']
 
-    for result in results:
+    for result in search_results:
         video_ids.append(result['id']['videoId'])    
 
     video_params = {
@@ -31,10 +31,10 @@ def index(request):
     }
     res = requests.get(search_url, params = video_params)
 
-    results = res.json()['items']
+    video_results = res.json()['items']
 
     videos = []
-    for result in results:
+    for result in video_results:
         video_data = {
             'title' : result['snippet']['title'],
             'id' : result['id'],
@@ -47,7 +47,7 @@ def index(request):
         'videos' : videos
     }
 
-    return render(request, 'McViewer/login.html', context)
+    return render(request, 'home_page.html', context)
 # Create your views here.
 
 def signUp(request):
@@ -60,7 +60,7 @@ def signUp(request):
         User.objects.create_user(username)
 
 def login(request):
-    
+
     return render(request, 'sign_in.html')
 
 def signUp(request):
@@ -70,6 +70,5 @@ def signUp(request):
 def searchResult(request):
     
     return render(request, 'search.html')
-
 
 
