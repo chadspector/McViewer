@@ -7,12 +7,38 @@ from django.conf import settings
 from django.http import HttpResponse
 
 def index(request):
+    
+    if request.method == "POST" and 'searchVideo' in request.POST:
+        search = request.POST.get("search")
+    
+    return redirect('searchResult', search=search)
+# Create your views here.
+
+def signUp(request):
+    if request.method == "POST" and "submitProfile" in request.POST:
+        first_name = request.POST.get("first_name")
+        last_name = request.POST.get("last_name")
+        username = request.POST.get("user_name")
+        password = request.POST.get("password")
+
+        User.objects.create_user(username)
+        return render(request, 'home_page.html')
+
+def login(request):
+
+    return render(request, 'sign_in.html')
+
+def signUp(request):
+    
+    return render(request, 'sign_up.html')
+
+def searchResult(request, search):
     search_url = 'https://www.googleapis.com/youtube/v3/search'
     video_url = 'https://www.googleapis.com/youtube/v3/videos'
 
     search_params = {
         'part' : 'snippet',
-        'q' : 'learn python',
+        'q' : 'nhl',
         'key' : settings.YOUTUBE_API_KEY,
         'maxResults' : 6,
         'type' : 'video'
@@ -46,31 +72,8 @@ def index(request):
         videos.append(video_data)
     
     context = {
-        'videos' : videos
+        'videoDisplayed': videos[0],
+        'upNextVideos' : videos[1:]
     }
-
-    return render(request, 'home_page.html', context)
-# Create your views here.
-
-def signUp(request):
-    if request.method == "POST" and "submitProfile" in request.POST:
-        first_name = request.POST.get("first_name")
-        last_name = request.POST.get("last_name")
-        username = request.POST.get("user_name")
-        password = request.POST.get("password")
-
-        User.objects.create_user(username)
-
-def login(request):
-
-    return render(request, 'sign_in.html')
-
-def signUp(request):
     
-    return render(request, 'sign_up.html')
-
-def searchResult(request):
-    
-    return render(request, 'search.html')
-
-
+    return render(request, 'search.html', context)

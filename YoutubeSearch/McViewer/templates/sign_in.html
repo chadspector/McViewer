@@ -43,8 +43,8 @@
           </p>
           
           <!-- Form -->
-          <form>
-
+          <form method="POST">
+            {% csrf_token %}
             <!-- Email address -->
             <div class="form-group">
 

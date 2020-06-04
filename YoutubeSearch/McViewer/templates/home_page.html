@@ -103,8 +103,12 @@
             <div class="card-body">
 
               <!-- Form -->
-              <form>
-                <input type="text" class="form-control form-control-rounded" placeholder="Search Here!">
+              <form method="POST">
+                {% csrf_token %}
+                <input type="text" name="search" class="form-control form-control-rounded" placeholder="Search Here!">
+                <button type="submit" name="searchVideo">
+                  Search
+              </button>
               </form>
 
             </div>
