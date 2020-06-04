@@ -105,7 +105,7 @@
               <!-- Form -->
               <form action="{% url 'search_result' %}" method="GET">
                 {% csrf_token %}
-                <input type="text" name="search" class="form-control form-control-rounded" placeholder="Search Here!">
+                <input type="text" name="search" class="form-control form-control-rounded" placeholder="Search Here!" required>
               </form>
 
             </div>

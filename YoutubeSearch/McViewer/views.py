@@ -1,36 +1,28 @@
 import requests
 
 from isodate import parse_duration
-
+from .models import *
 from django.shortcuts import render
 from django.conf import settings
 from django.http import HttpResponse
 
 def index(request):
-    
-    # if request.method == "POST" and 'searchVideo' in request.POST:
-    #     search = request.POST.get("search")
-    
-    return render(request, 'home_page.html')
-# Create your views here.
-
-def signUp(request):
     if request.method == "POST" and "submitProfile" in request.POST:
         first_name = request.POST.get("first_name")
         last_name = request.POST.get("last_name")
-        username = request.POST.get("user_name")
+        username = request.POST.get("username")
         password = request.POST.get("password")
-
-        User.objects.create_user(username)
+        email = request.POST.get("email")
+        user = User.objects.create_user(username=username, email=email, first_name=first_name,last_name=last_name,password=password)
+        user.save()
         return render(request, 'home_page.html')
 
+def signUp(request):
+    return render(request, 'sign_up.html')
+    
 def login(request):
 
     return render(request, 'sign_in.html')
-
-def signUp(request):
-    
-    return render(request, 'sign_up.html')
 
 def searchResult(request):
     search_url = 'https://www.googleapis.com/youtube/v3/search'
@@ -79,3 +71,5 @@ def searchResult(request):
         }
         
         return render(request, 'search.html', context)
+        
+
