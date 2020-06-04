@@ -15,7 +15,7 @@ def index(request):
         email = request.POST.get("email")
         user = User.objects.create_user(username=username, email=email, first_name=first_name,last_name=last_name,password=password)
         user.save()
-        return render(request, 'home_page.html')
+    return render(request, 'home_page.html')
 
 def signUp(request):
     return render(request, 'sign_up.html')
