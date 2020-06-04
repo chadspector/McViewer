@@ -8,10 +8,10 @@ from django.http import HttpResponse
 
 def index(request):
     
-    if request.method == "POST" and 'searchVideo' in request.POST:
-        search = request.POST.get("search")
+    # if request.method == "POST" and 'searchVideo' in request.POST:
+    #     search = request.POST.get("search")
     
-    return redirect('searchResult', search=search)
+    return render(request, 'home_page.html')
 # Create your views here.
 
 def signUp(request):
@@ -32,48 +32,50 @@ def signUp(request):
     
     return render(request, 'sign_up.html')
 
-def searchResult(request, search):
+def searchResult(request):
     search_url = 'https://www.googleapis.com/youtube/v3/search'
     video_url = 'https://www.googleapis.com/youtube/v3/videos'
 
-    search_params = {
-        'part' : 'snippet',
-        'q' : 'nhl',
-        'key' : settings.YOUTUBE_API_KEY,
-        'maxResults' : 6,
-        'type' : 'video'
-    }
-    video_ids = []
-    res = requests.get(search_url, params = search_params)
-    
-    search_results = res.json()['items']
-    for result in search_results:
-        video_ids.append(result['id']['videoId'])
-    
-    
-    video_params = {
-        'key' : settings.YOUTUBE_API_KEY,
-        'part' : 'snippet,contentDetails',
-        'id' : ','.join(video_ids),
-        'maxResults' : 6
-    }
-    res = requests.get(video_url, params = video_params)
-
-    video_results = res.json()['items']
-
-    videos = []
-    for result in video_results:
-        video_data = {
-            'title' : result['snippet']['title'],
-            'id' : result['id'],
-            'duration' : parse_duration(result['contentDetails']['duration']),
-            'thumbnail' : result['snippet']['thumbnails']['high']['url']
+    if request.method == "GET":
+        search = request.GET.get("search")
+        search_params = {
+            'part' : 'snippet',
+            'q' : search,
+            'key' : settings.YOUTUBE_API_KEY,
+            'maxResults' : 6,
+            'type' : 'video'
         }
-        videos.append(video_data)
-    
-    context = {
-        'videoDisplayed': videos[0],
-        'upNextVideos' : videos[1:]
-    }
-    
-    return render(request, 'search.html', context)
+        video_ids = []
+        res = requests.get(search_url, params = search_params)
+        
+        search_results = res.json()['items']
+        for result in search_results:
+            video_ids.append(result['id']['videoId'])
+        
+        
+        video_params = {
+            'key' : settings.YOUTUBE_API_KEY,
+            'part' : 'snippet,contentDetails',
+            'id' : ','.join(video_ids),
+            'maxResults' : 6
+        }
+        res = requests.get(video_url, params = video_params)
+
+        video_results = res.json()['items']
+
+        videos = []
+        for result in video_results:
+            video_data = {
+                'title' : result['snippet']['title'],
+                'id' : result['id'],
+                'duration' : parse_duration(result['contentDetails']['duration']),
+                'thumbnail' : result['snippet']['thumbnails']['high']['url']
+            }
+            videos.append(video_data)
+        
+        context = {
+            'videoDisplayed': videos[0],
+            'upNextVideos' : videos[1:]
+        }
+        
+        return render(request, 'search.html', context)

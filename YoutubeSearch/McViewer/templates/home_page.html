@@ -103,12 +103,9 @@
             <div class="card-body">
 
               <!-- Form -->
-              <form method="POST">
+              <form action="{% url 'search_result' %}" method="GET">
                 {% csrf_token %}
                 <input type="text" name="search" class="form-control form-control-rounded" placeholder="Search Here!">
-                <button type="submit" name="searchVideo">
-                  Search
-              </button>
               </form>
 
             </div>
