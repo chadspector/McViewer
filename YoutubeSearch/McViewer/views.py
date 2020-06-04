@@ -1,6 +1,9 @@
 import requests
+
 from isodate import parse_duration
 from django.shortcuts import render, redirect
+
+from django.shortcuts import render
 from django.conf import settings
 from django.http import HttpResponse
 from django.contrib.auth.models import User
@@ -21,23 +24,23 @@ def index(request, username):
     video_ids = []
     res = requests.get(search_url, params = search_params)
     
-    results = res.json()['items']
-
-    for result in results:
-        video_ids.append(result['id']['videoId'])    
-
+    search_results = res.json()['items']
+    for result in search_results:
+        video_ids.append(result['id']['videoId'])
+    
+    
     video_params = {
         'key' : settings.YOUTUBE_API_KEY,
         'part' : 'snippet,contentDetails',
         'id' : ','.join(video_ids),
         'maxResults' : 6
     }
-    res = requests.get(search_url, params = video_params)
+    res = requests.get(video_url, params = video_params)
 
-    results = res.json()['items']
+    video_results = res.json()['items']
 
     videos = []
-    for result in results:
+    for result in video_results:
         video_data = {
             'title' : result['snippet']['title'],
             'id' : result['id'],
@@ -50,7 +53,7 @@ def index(request, username):
         'videos' : videos
     }
 
-    return render(request, 'McViewer/login.html', context)
+    return render(request, 'home_page.html', context)
 # Create your views here.
 
 def signUp(request):
@@ -62,10 +65,12 @@ def signUp(request):
         raw_password = request.POST.get("password")
 
         if User.objects.filter(username=username).exists():
-            raise forms.ValidationError(_("This username already exists."))
+            #raise ValidationError("This username already exists.")
+            context= {'error':'The username you entered has already been taken. Please try another username.'}
+            return render(request, 'sign_up.html', context)
 
         if User.objects.filter(email=the_email).exists():
-            raise forms.ValidationError(_("This email already exists."))
+            raise ValidationError("This email already exists.")
 
         user = User.objects.create_user(username, first_name = the_first_name, last_name = the_last_name, email = the_email, password = raw_password)
         user.save()
@@ -77,7 +82,7 @@ def signUp(request):
 
     return render(request, 'sign_up.html')
 def login(request):
-    
+
     return render(request, 'sign_in.html')
 
 def searchResult(request):

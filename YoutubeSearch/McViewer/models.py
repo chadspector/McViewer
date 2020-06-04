@@ -6,7 +6,7 @@ import datetime
 
 #Create your models here.
 class Video(models.Model):
-    thumbnail = models.ImageField(upload_to='video_thumbnails', blank=True)
+    thumbnail = models.ImageField(upload_to='images', default="default.jpg")
     title = models.CharField(max_length=255,default="None")
     duration = models.CharField(max_length=255,default="None")
     creator = models.CharField(max_length=255,default="None")
