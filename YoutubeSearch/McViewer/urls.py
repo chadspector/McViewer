@@ -9,6 +9,6 @@ from . import views
 urlpatterns = [
     path('login', views.login, name="login"),
     path('sign_up', views.signUp, name="sign_up"),
-    path('homepage', views.index, name="home_page"),
+    path('homepage/<str:username>', views.index, name="home_page"),
     path('search', views.searchResult, name="search_result")
 ]

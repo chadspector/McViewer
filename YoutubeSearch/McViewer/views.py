@@ -1,23 +1,42 @@
 import requests
 
 from isodate import parse_duration
-from .models import *
+from django.shortcuts import render, redirect
+
 from django.shortcuts import render
 from django.conf import settings
 from django.http import HttpResponse
+from django.contrib.auth.models import User
+from .models import *
+from django.forms import ValidationError
+from datetime import date
 
-def index(request):
-    if request.method == "POST" and "submitProfile" in request.POST:
-        first_name = request.POST.get("first_name")
-        last_name = request.POST.get("last_name")
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-        email = request.POST.get("email")
-        user = User.objects.create_user(username=username, email=email, first_name=first_name,last_name=last_name,password=password)
-        user.save()
+def index(request, username):
     return render(request, 'home_page.html')
 
 def signUp(request):
+    if request.method == "POST" and "submitProfile" in request.POST:
+        the_first_name = request.POST.get("first_name")
+        the_last_name = request.POST.get("last_name")
+        username = request.POST.get("username")
+        the_email = request.POST.get("email")
+        raw_password = request.POST.get("password")
+
+        if User.objects.filter(username=username).exists():
+            #raise ValidationError("This username already exists.")
+            context = {'error':'The username you entered has already been taken. Please try another username.'}
+            return render(request, 'sign_up.html', context)
+
+        if User.objects.filter(email=the_email).exists():
+            raise ValidationError("This email already exists.")
+
+        user = User.objects.create_user(username, first_name = the_first_name, last_name = the_last_name, email = the_email, password = raw_password)
+        user.save()
+        userprofile = UserProfile.objects.create(
+            user = user,
+        )
+        userprofile.save()
+        return redirect('home_page', username = username)
     return render(request, 'sign_up.html')
     
 def login(request):
@@ -25,45 +44,21 @@ def login(request):
     return render(request, 'sign_in.html')
 
 def searchResult(request):
-    search_url = 'https://www.googleapis.com/youtube/v3/search'
-    video_url = 'https://www.googleapis.com/youtube/v3/videos'
 
     if request.method == "GET":
         search = request.GET.get("search")
-        search_params = {
-            'part' : 'snippet',
-            'q' : search,
-            'key' : settings.YOUTUBE_API_KEY,
-            'maxResults' : 6,
-            'type' : 'video'
-        }
-        video_ids = []
-        res = requests.get(search_url, params = search_params)
-        
-        search_results = res.json()['items']
-        for result in search_results:
-            video_ids.append(result['id']['videoId'])
-        
-        
-        video_params = {
-            'key' : settings.YOUTUBE_API_KEY,
-            'part' : 'snippet,contentDetails',
-            'id' : ','.join(video_ids),
-            'maxResults' : 6
-        }
-        res = requests.get(video_url, params = video_params)
+        user_profile = UserProfile.objects.get(user=request.user)
+        newSearch = Search.objects.create(
+            text = search,
+            date_searched = date.today(),
+            user_profile = user_profile
+        )
+        newSearch.save()
+        if Search.objects.filter(user_profile=user_profile).count() > 3:
+            earliest_search = Search.objects.filter(user_profile=user_profile).order_by('id').first()
+            earliest_search.delete()
 
-        video_results = res.json()['items']
-
-        videos = []
-        for result in video_results:
-            video_data = {
-                'title' : result['snippet']['title'],
-                'id' : result['id'],
-                'duration' : parse_duration(result['contentDetails']['duration']),
-                'thumbnail' : result['snippet']['thumbnails']['high']['url']
-            }
-            videos.append(video_data)
+        videos = getSearchedVideos(search, 6)
         
         context = {
             'videoDisplayed': videos[0],
@@ -72,4 +67,41 @@ def searchResult(request):
         
         return render(request, 'search.html', context)
         
+def getSearchedVideos(search, numResults):
+    search_url = 'https://www.googleapis.com/youtube/v3/search'
+    video_url = 'https://www.googleapis.com/youtube/v3/videos'
 
+    search_params = {
+            'part' : 'snippet',
+            'q' : search,
+            'key' : settings.YOUTUBE_API_KEY,
+            'maxResults' : numResults,
+            'type' : 'video'
+        }
+    video_ids = []
+    res = requests.get(search_url, params = search_params)
+        
+    search_results = res.json()['items']
+    for result in search_results:
+        video_ids.append(result['id']['videoId'])
+    
+    video_params = {
+        'key' : settings.YOUTUBE_API_KEY,
+        'part' : 'snippet,contentDetails',
+        'id' : ','.join(video_ids),
+        'maxResults' : numResults
+    }
+    res = requests.get(video_url, params = video_params)
+
+    video_results = res.json()['items']
+
+    videos = []
+    for result in video_results:
+        video_data = {
+            'title' : result['snippet']['title'],
+            'id' : result['id'],
+            'duration' : parse_duration(result['contentDetails']['duration']),
+            'thumbnail' : result['snippet']['thumbnails']['high']['url']
+        }
+        videos.append(video_data)
+    return videos
