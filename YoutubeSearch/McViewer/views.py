@@ -16,11 +16,7 @@ def index(request, username):
 
 def signUp(request):
     if request.method == "POST" and "submitProfile" in request.POST:
-        the_first_name = request.POST.get("first_name")
-        the_last_name = request.POST.get("last_name")
-        username = request.POST.get("username")
-        the_email = request.POST.get("email")
-        raw_password = request.POST.get("password")
+       
 
         if User.objects.filter(username=username).exists():
             #raise ValidationError("This username already exists.")
