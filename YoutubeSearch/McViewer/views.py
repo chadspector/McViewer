@@ -12,7 +12,10 @@ from django.forms import ValidationError
 from datetime import date
 
 def index(request, username):
-    return render(request, 'home_page.html')
+    user=UserProfile.objects.get(user=request.user)
+    return render(request, 'home_page.html', {
+        "userProfile":user
+    })
 
 def signUp(request):
     if request.method == "POST" and "submitProfile" in request.POST:
@@ -56,12 +59,16 @@ def searchResult(request):
 
         videos = getSearchedVideos(search, 6)
         
-        context = {
+        # context = {
+        #     'videoDisplayed': videos[0],
+        #     'upNextVideos' : videos[1:]
+        # }
+        
+        return render(request, 'search.html', {
+            "search":newSearch,
             'videoDisplayed': videos[0],
             'upNextVideos' : videos[1:]
-        }
-        
-        return render(request, 'search.html', context)
+        })
         
 def getSearchedVideos(search, numResults):
     search_url = 'https://www.googleapis.com/youtube/v3/search'
