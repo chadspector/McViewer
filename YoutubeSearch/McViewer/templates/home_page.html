@@ -134,15 +134,15 @@
       <div class="tab-content">
         <div class="tab-pane fade active show" id="tabPaneOne" role="tabpanel">
           <div class="row listAlias">
-            {% for video in videos %}
+            {% for search in recentSearches %}
             <div class="col-12 col-md-6 col-xl-4">
 
               <!-- Card -->
               <div class="card">
 
                 <!-- Image -->
-                <a href="project-overview.html">
-                  <img src="{{ video.thumbnail }}" alt="..." class="card-img-top">
+                <a href="{% url sear">
+                  <img src="{{ search.thumbnail }}" alt="..." class="card-img-top">
                 </a>
 
                 <!-- Body -->
@@ -152,12 +152,12 @@
 
                       <!-- Title -->
                       <h4 class="mb-2 name">
-                        <a href="project-overview.html">{{ video.title }}</a>
+                        <a href="project-overview.html">{{ search.text }}</a>
                       </h4>
 
                       <!-- Subtitle -->
                       <p class="card-text small text-muted">
-                        Updated 4hr ago
+                        {{ search.title }}
                       </p>
 
                     </div>

@@ -11,3 +11,6 @@ class Search(models.Model):
     date_searched = models.DateTimeField(default=timezone.now)
     text = models.CharField(max_length=255,default="None")
     user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE, blank=True, null=True)
+    title = models.CharField(max_length=255,default="None")
+    thumbnail = models.ImageField(default='default.jpg', upload_to='images')
+
