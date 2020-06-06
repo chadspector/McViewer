@@ -243,7 +243,7 @@
         </div>
         <div class="tab-pane fade" id="tabPaneTwo" role="tabpanel">
           <div class="row list">
-            {% for video in videos %}
+            {% for search in recentSearches %}
             <div class="col-12">
 
               <div class="card">
@@ -253,7 +253,7 @@
 
                       <!-- Avatar -->
                       <a href="project-overview.html" class="avatar avatar-lg avatar-4by3">
-                        <img src="{{ video.thumbnail }}"" alt="..." class="avatar-img rounded">
+                        <img src="{{ search.thumbnail }}"" alt="..." class="avatar-img rounded">
                       </a>
 
                     </div>
@@ -261,12 +261,12 @@
 
                       <!-- Title -->
                       <h4 class="mb-1 name">
-                        <a href="project-overview.html">{{ video.title }}</a>
+                        <a href="project-overview.html">{{ search.text }}</a>
                       </h4>
 
                       <!-- Text -->
                       <p class="card-text small text-muted mb-1">
-                        <time datetime="2018-06-21">Updated 2hr ago</time>
+                        <time datetime="2018-06-21">{{ search.title }}</time>
                       </p>
 
                       <!-- Progress -->
