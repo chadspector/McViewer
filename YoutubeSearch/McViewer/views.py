@@ -188,3 +188,11 @@ def loginprofile(request):
             return render(request, 'sign_in.html', context)
 
     return render(request, 'sign_in.html')
+
+def publicNetwork(request):
+    return render(request, 'public_network.html')
+
+
+
+def privateNetwork(request):
+    return render(request, 'private_network.html')
