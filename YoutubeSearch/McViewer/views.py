@@ -19,7 +19,8 @@ def index(request, username):
     recent_searches = Search.objects.filter(user_profile=user_profile)
     return render(request, 'home_page.html', {
         'userProfile': user_profile,
-        'recentSearches': recent_searches
+        'recentSearches': recent_searches,
+        'numOfSearches': len(recent_searches)
     })
 
 def signUp(request):
