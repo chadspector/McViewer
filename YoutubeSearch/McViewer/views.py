@@ -121,7 +121,7 @@ def getSearchedVideos(search, numResults):
     return videos
 
 @login_required
-def editProfile(request):
+def editProfile(request, username):
     if request.method == "POST" and "editProfile" in request.POST:
         the_first_name = request.POST.get("first_name")
         the_last_name = request.POST.get("last_name")
