@@ -16,7 +16,7 @@
   <div class="header">
 
     <!-- Image -->
-    <img src="assets/img/covers/profile-cover-1.jpg" class="header-img-top" alt="...">
+    <img src="{{ userprofile.cover_photo.url }}" class="header-img-top" alt="...">
 
     <div class="container-fluid">
 
@@ -41,7 +41,7 @@
 
             <!-- Title -->
             <h1 class="header-title">
-              {{userProfile.user.first_name}} {{userProfile.user.last_name}}
+              {{userprofile.user.first_name}} {{userprofile.user.last_name}}
             </h1>
 
           </div>
@@ -51,6 +51,13 @@
             <a href="#!" class="btn btn-primary d-block d-md-inline-block lift">
               Subscribe
             </a>
+
+            <form method="POST">
+              {% csrf_token %}
+              <button type="submit" name="logout" >
+                Logout
+              </button>
+            </form>
 
           </div>
         </div> <!-- / .row -->
@@ -142,7 +149,7 @@
               <div class="card">
 
                 <!-- Image -->
-                <a href="{% url sear">
+                <a href="{% url 'getRelatedSearch' search.text %}">
                   <img src="{{ search.thumbnail }}" alt="..." class="card-img-top">
                 </a>
 
@@ -153,7 +160,7 @@
 
                       <!-- Title -->
                       <h4 class="mb-2 name">
-                        <a href="project-overview.html">{{ search.text }}</a>
+                        <a href="{% url 'getRelatedSearch' search.text %}">{{ search.text }}</a>
                       </h4>
 
                       <!-- Subtitle -->
@@ -253,7 +260,7 @@
                     <div class="col-auto">
 
                       <!-- Avatar -->
-                      <a href="project-overview.html" class="avatar avatar-lg avatar-4by3">
+                      <a href="{% url 'getRelatedSearch' search.text %}" class="avatar avatar-lg avatar-4by3">
                         <img src="{{ search.thumbnail }}"" alt="..." class="avatar-img rounded">
                       </a>
 
@@ -262,7 +269,7 @@
 
                       <!-- Title -->
                       <h4 class="mb-1 name">
-                        <a href="project-overview.html">{{ search.text }}</a>
+                        <a href="{% url 'getRelatedSearch' search.text %}">{{ search.text }}</a>
                       </h4>
 
                       <!-- Text -->
