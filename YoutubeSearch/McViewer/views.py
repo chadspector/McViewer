@@ -127,8 +127,10 @@ def editProfile(request):
         the_last_name = request.POST.get("last_name")
         raw_password = request.POST.get("password")
         form = ImageUploadForm(request.POST, request.FILES)
+        
         if form.is_valid():
             image = form.cleaned_data['image']
+        
         user = request.user
         user_profile = UserProfile.objects.get(user=user)
         user_profile.display_picture = image
