@@ -19,7 +19,11 @@
 
                     <!-- Title -->
                     <h1 class="header-title">
-                        {{search.text}}
+                        {% if search.text is None %}
+                        {{ videoDisplayed.title }}
+                        {% else %}
+                        {{search.text }}
+                        {% endif %}
                     </h1>
 
                 </div>

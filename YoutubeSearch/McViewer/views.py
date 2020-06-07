@@ -153,10 +153,10 @@ def getRelatedSearch(request, id):
     }
     res = requests.get(video_url, params = video_params)
 
-    video_results = res.json()['items']
+    related_results = res.json()['items']
 
     videos = []
-    for result in video_results:
+    for result in related_results:
         video_data = {
             'title' : result['snippet']['title'],
             'id' : result['id'],
@@ -174,31 +174,41 @@ def getRelatedSearch(request, id):
 
     video_results = res.json()['items']
 
+    videoDisplayed = video_results[0]
+
     videoDisplayed = {
-        'title' : result['snippet']['title'],
-        'id' : result['id'],
-        'duration' : parse_duration(result['contentDetails']['duration']),
-        'thumbnail' : result['snippet']['thumbnails']['high']['url']
+        'title' : videoDisplayed['snippet']['title'],
+        'id' : videoDisplayed['id'],
+        'duration' : parse_duration(videoDisplayed['contentDetails']['duration']),
+        'thumbnail' : videoDisplayed['snippet']['thumbnails']['high']['url']
     }
 
     user_profile = UserProfile.objects.get(user=request.user)
 
-    newSearch = Search.objects.create(
-        text = videoDisplayed['title'],
-        date_searched = date.today(),
-        user_profile = user_profile,
-        title = videoDisplayed['title'],
-        video_id = videoDisplayed['id'],
-        thumbnail = videoDisplayed['thumbnail']
-    )
+    if Search.objects.filter(user_profile=user_profile, title=videoDisplayed['title']).exists():
+        newSearch = Search.objects.get(user_profile=user_profile, title=videoDisplayed['title'])
+        newSearch.text = videoDisplayed['title']
+        newSearch.date_searched = date.today()
+    elif Search.objects.filter(user_profile=user_profile, text=videoDisplayed['title']).exists():
+        newSearch = Search.objects.get(user_profile=user_profile, text=videoDisplayed['title'])
+        newSearch.title = videoDisplayed['title']
+        newSearch.date_searched = date.today()
+    else:
+        newSearch = Search.objects.create(
+            text = videoDisplayed['title'],
+            date_searched = date.today(),
+            user_profile = user_profile,
+            title = videoDisplayed['title'],
+            video_id = videoDisplayed['id'],
+            thumbnail = videoDisplayed['thumbnail']
+        )
+        if Search.objects.filter(user_profile=user_profile).count() > 3:
+            earliest_search = Search.objects.filter(user_profile=user_profile).order_by('id').first()
+            earliest_search.delete()
     newSearch.save()
-    
-    if Search.objects.filter(user_profile=user_profile).count() > 3:
-        earliest_search = Search.objects.filter(user_profile=user_profile).order_by('id').first()
-        earliest_search.delete()
 
     return render(request, 'search.html', {
-        'search': newSearch,
+        'search': videoDisplayed['title'],
         'videoDisplayed': videoDisplayed,
         'upNextVideos' : videos
         })
