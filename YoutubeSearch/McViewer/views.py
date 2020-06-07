@@ -11,6 +11,7 @@ from .models import *
 from django.contrib.auth import login, authenticate, logout
 from django.forms import ValidationError
 from datetime import date
+from .forms import *
 from django.contrib.auth.decorators import login_required
 
 @login_required
@@ -21,8 +22,9 @@ def index(request, username):
         logout(request)
         return redirect('login')
     return render(request, 'home_page.html', {
-        'userProfile': user_profile,
-        'recentSearches': recent_searches
+        'userprofile': user_profile,
+        'recentSearches': recent_searches,
+        'numOfSearches': len(recent_searches)
     })
 
 def signUp(request):
@@ -124,23 +126,47 @@ def getSearchedVideos(search, numResults):
     return videos
 
 @login_required
+def getRelatedSearch(request, search):
+    user_profile = UserProfile.objects.get(user=request.user)
+
+    videos = getSearchedVideos(search, 6)
+    newSearch = Search.objects.create(
+        text = search,
+        date_searched = date.today(),
+        user_profile = user_profile,
+        title = videos[0]['title'],
+        thumbnail = videos[0]['thumbnail']
+    )
+    newSearch.save()
+    
+    if Search.objects.filter(user_profile=user_profile).count() > 3:
+        earliest_search = Search.objects.filter(user_profile=user_profile).order_by('id').first()
+        earliest_search.delete()
+
+    return render(request, 'search.html', {
+        'search': newSearch,
+        'videoDisplayed': videos[0],
+        'upNextVideos' : videos[1:]
+        })
+    
+
+@login_required
 def editProfile(request, username):
+    user = request.user
+    user_profile = UserProfile.objects.get(user=user)
     if request.method == "POST" and "editProfile" in request.POST:
         the_first_name = request.POST.get("first_name")
         the_last_name = request.POST.get("last_name")
-        raw_password = request.POST.get("password")
         form = ImageUploadForm(request.POST, request.FILES)
         
         if form.is_valid():
             image = form.cleaned_data['image']
         
-        user = request.user
-        user_profile = UserProfile.objects.get(user=user)
+        user.first_name = the_first_name
+        user.last_name = the_last_name
         user_profile.display_picture = image
-        user.update(username = username, first_name = the_first_name, last_name = the_last_name, email = the_email, password = raw_password)
         user.save()
         user_profile.save()
-        
         return redirect('home_page', username=username)
     return render(request, 'edit_profile.html')
 

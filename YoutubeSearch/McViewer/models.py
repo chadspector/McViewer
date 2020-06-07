@@ -4,7 +4,8 @@ from django.utils import timezone
 import datetime
 
 class UserProfile(models.Model):
-    display_picture = models.ImageField(upload_to='images', default="default.jpg")
+    cover_photo = models.ImageField(upload_to='images', default="images/default-cover.jpg")
+    display_picture = models.ImageField(upload_to='images', default="images/default-display.jpg")
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
 class Search(models.Model):
@@ -12,5 +13,5 @@ class Search(models.Model):
     text = models.CharField(max_length=255,default="None")
     user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE, blank=True, null=True)
     title = models.CharField(max_length=255,default="None")
-    thumbnail = models.ImageField(default='default.jpg', upload_to='images')
+    thumbnail = models.ImageField(default='images/default-thumbnail.jpg', upload_to='images')
 
