@@ -11,6 +11,7 @@ from .models import *
 from django.contrib.auth import login, authenticate
 from django.forms import ValidationError
 from datetime import date
+from .forms import *
 from django.contrib.auth.decorators import login_required
 
 @login_required
@@ -18,7 +19,7 @@ def index(request, username):
     user_profile = UserProfile.objects.get(user=request.user)
     recent_searches = Search.objects.filter(user_profile=user_profile)
     return render(request, 'home_page.html', {
-        'userProfile': user_profile,
+        'userprofile': user_profile,
         'recentSearches': recent_searches
     })
 
@@ -121,7 +122,7 @@ def getSearchedVideos(search, numResults):
     return videos
 
 @login_required
-def getRelatedSearch(request):
+def getRelatedSearch(request, search):
     user_profile = UserProfile.objects.get(user=request.user)
 
     videos = getSearchedVideos(search, 6)
@@ -147,22 +148,20 @@ def getRelatedSearch(request):
 
 @login_required
 def editProfile(request, username):
-
+    user = request.user
+    user_profile = UserProfile.objects.get(user=user)
     if request.method == "POST" and "editProfile" in request.POST:
         the_first_name = request.POST.get("first_name")
         the_last_name = request.POST.get("last_name")
-        raw_password = request.POST.get("password")
         form = ImageUploadForm(request.POST, request.FILES)
         
         if form.is_valid():
             image = form.cleaned_data['image']
         
-        user = request.user
-        user_profile = UserProfile.objects.get(user=user)
+        user.first_name = the_first_name
+        user.last_name = the_last_name
         user_profile.display_picture = image
-        user.update(username = username, first_name = the_first_name, last_name = the_last_name, email = the_email, password = raw_password)
         user.save()
         user_profile.save()
-        
         return redirect('home_page', username=username)
     return render(request, 'edit_profile.html')
