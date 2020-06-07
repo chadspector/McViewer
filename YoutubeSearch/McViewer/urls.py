@@ -11,9 +11,8 @@ urlpatterns = [
     path('sign_up', views.signUp, name="sign_up"),
     path('homepage/<str:username>', views.index, name="home_page"),
     path('search', views.searchResult, name="search_result"),
-<<<<<<< HEAD
-=======
     path('getRelatedSearch/<str:search>', views.getRelatedSearch, name="getRelatedSearch"),
->>>>>>> e23a8420a8106f6e13960864a1833fb0825e092b
-    path('edit_profile/<str:username>',views.editProfile, name="edit_profile")
+    path('edit_profile/<str:username>',views.editProfile, name="edit_profile"),
+    path('public_network/<str:username>', views.publicNetwork, name = "public_network"),
+    path('private_network/<str:username>', views.privateNetwork, name = "private_network")
 ]
