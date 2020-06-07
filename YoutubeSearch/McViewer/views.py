@@ -189,10 +189,13 @@ def loginprofile(request):
 
     return render(request, 'sign_in.html')
 
-def publicNetwork(request):
-    return render(request, 'public_network.html')
+def publicNetwork(request, username):
+    searches = Search.objects.all().order_by('date_searched')[:5]
+    return render(request, 'public_network.html', {
+        'searches': searches,
+        })
 
 
 
-def privateNetwork(request):
+def privateNetwork(request, username):
     return render(request, 'private_network.html')
