@@ -121,6 +121,31 @@ def getSearchedVideos(search, numResults):
     return videos
 
 @login_required
+def getRelatedSearch(request):
+    user_profile = UserProfile.objects.get(user=request.user)
+
+    videos = getSearchedVideos(search, 6)
+    newSearch = Search.objects.create(
+        text = search,
+        date_searched = date.today(),
+        user_profile = user_profile,
+        title = videos[0]['title'],
+        thumbnail = videos[0]['thumbnail']
+    )
+    newSearch.save()
+    
+    if Search.objects.filter(user_profile=user_profile).count() > 3:
+        earliest_search = Search.objects.filter(user_profile=user_profile).order_by('id').first()
+        earliest_search.delete()
+
+    return render(request, 'search.html', {
+        'search': newSearch,
+        'videoDisplayed': videos[0],
+        'upNextVideos' : videos[1:]
+        })
+    
+
+@login_required
 def editProfile(request):
     if request.method == "POST" and "editProfile" in request.POST:
         the_first_name = request.POST.get("first_name")
