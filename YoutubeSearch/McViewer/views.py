@@ -31,12 +31,12 @@ def signUp(request):
         raw_password = request.POST.get("password")
 
         if User.objects.filter(username=username).exists():
-            #raise ValidationError("This username already exists.")
             context = {'error':'The username you entered has already been taken. Please try another username.'}
             return render(request, 'sign_up.html', context)
 
         if User.objects.filter(email=the_email).exists():
-            raise ValidationError("This email already exists.")
+            context = {'error':'The email you entered has already been taken. Please try another email.'}
+            return render(request, 'sign_up.html', context)
 
         user = User.objects.create_user(username = username, first_name = the_first_name, last_name = the_last_name, email = the_email, password = raw_password)
         user.save()
@@ -119,3 +119,24 @@ def getSearchedVideos(search, numResults):
         videos.append(video_data)
     
     return videos
+
+@login_required
+def editProfile(request):
+    if request.method == "POST" and "editProfile" in request.POST:
+        the_first_name = request.POST.get("first_name")
+        the_last_name = request.POST.get("last_name")
+        raw_password = request.POST.get("password")
+        form = ImageUploadForm(request.POST, request.FILES)
+        
+        if form.is_valid():
+            image = form.cleaned_data['image']
+        
+        user = request.user
+        user_profile = UserProfile.objects.get(user=user)
+        user_profile.display_picture = image
+        user.update(username = username, first_name = the_first_name, last_name = the_last_name, email = the_email, password = raw_password)
+        user.save()
+        user_profile.save()
+        
+        return redirect('home_page', username=username)
+    return render(request, 'edit_profile.html')
