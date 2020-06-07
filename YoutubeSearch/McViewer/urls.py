@@ -11,5 +11,5 @@ urlpatterns = [
     path('sign_up', views.signUp, name="sign_up"),
     path('homepage/<str:username>', views.index, name="home_page"),
     path('search', views.searchResult, name="search_result"),
-    path('<str:username>/edit_profile',views.editProfile, name="edit_profile")
+    path('edit_profile/<str:username>',views.editProfile, name="edit_profile")
 ]
