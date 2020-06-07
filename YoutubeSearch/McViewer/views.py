@@ -39,7 +39,7 @@ def signUp(request):
             context = {'error':'The username you entered has already been taken. Please try another username.'}
             return render(request, 'sign_up.html', context)
 
-        if User.objects.filter(email=the_email).exists():
+        elif User.objects.filter(email=the_email).exists():
             context = {'error':'The email you entered has already been taken. Please try another email.'}
             return render(request, 'sign_up.html', context)
 
