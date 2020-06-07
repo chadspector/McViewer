@@ -173,21 +173,18 @@ def editProfile(request, username):
 
 def loginprofile(request):
     if request.method == "POST" and "login" in request.POST:
-        print("getting here")
         the_email = request.POST.get("email")
         raw_password = request.POST.get("password")
-        print(the_email)
-        print(raw_password)
         if User.objects.filter(email = the_email).exists():
             user = User.objects.get(email = the_email)
-            userprofile = UserProfile.objects.get(user = user)
-            print(user)
-            print(userprofile)
-
-            if user.is_authenticated:
+            if user.check_password(raw_password) and user.is_authenticated:
                 login(request, user)
                 return redirect('home_page', username = user.username)
+            else:
+                context = {'error':'You have entered an invalid password.'}
+                return render(request, 'sign_in.html', context)
         else:   
-            return redirect('sign_up')
+            context = {'error':'You have entered an invalid email.'}
+            return render(request, 'sign_in.html', context)
 
     return render(request, 'sign_in.html')
