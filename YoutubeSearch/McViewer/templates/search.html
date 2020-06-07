@@ -93,7 +93,7 @@
                     <div class="col-auto">
 
                         <!-- Avatar -->
-                        <a href="{% url 'getRelatedSearch' video.title %}">
+                        <a href="{% url 'getRelatedSearch' video.id %}">
                             <img src="{{video.thumbnail}}" alt="..." class="avatar-img rounded">
                         </a>
                     </div>
@@ -101,7 +101,7 @@
 
                         <!-- Title -->
                         <h4 class="mb-1 name">
-                            <a href="{% url 'getRelatedSearch' video.title %}">{{video.title}}</a>
+                            <a href="{% url 'getRelatedSearch' video.id %}">{{video.title}}</a>
                         </h4>
 
                         <!-- Text -->

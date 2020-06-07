@@ -71,6 +71,7 @@ def searchResult(request):
             date_searched = date.today(),
             user_profile = user_profile,
             title = videos[0]['title'],
+            video_id = videos[0]['id'],
             thumbnail = videos[0]['thumbnail']
         )
         newSearch.save()
@@ -126,16 +127,69 @@ def getSearchedVideos(search, numResults):
     return videos
 
 @login_required
-def getRelatedSearch(request, search):
+def getRelatedSearch(request, id):
+    search_url = 'https://www.googleapis.com/youtube/v3/search'
+    video_url = 'https://www.googleapis.com/youtube/v3/videos'
+    
+    related_params = {
+        'part' : 'snippet',
+        'key' : settings.YOUTUBE_API_KEY,
+        'maxResults' : 6,
+        'relatedToVideoId' : id,
+        'type' : 'video'
+    }
+    video_ids = []
+    res = requests.get(search_url, params = related_params)
+        
+    search_results = res.json()['items']
+    for result in search_results:
+        video_ids.append(result['id']['videoId'])
+    
+    video_params = {
+        'key' : settings.YOUTUBE_API_KEY,
+        'part' : 'snippet,contentDetails',
+        'id' : ','.join(video_ids),
+        'maxResults' : 6
+    }
+    res = requests.get(video_url, params = video_params)
+
+    video_results = res.json()['items']
+
+    videos = []
+    for result in video_results:
+        video_data = {
+            'title' : result['snippet']['title'],
+            'id' : result['id'],
+            'duration' : parse_duration(result['contentDetails']['duration']),
+            'thumbnail' : result['snippet']['thumbnails']['high']['url']
+        }
+        videos.append(video_data)
+    
+    videoDisplayed_params = {
+        'key' : settings.YOUTUBE_API_KEY,
+        'part' : 'snippet,contentDetails',
+        'id' : id,
+    }
+    res = requests.get(video_url, params = videoDisplayed_params)
+
+    video_results = res.json()['items']
+
+    videoDisplayed = {
+        'title' : result['snippet']['title'],
+        'id' : result['id'],
+        'duration' : parse_duration(result['contentDetails']['duration']),
+        'thumbnail' : result['snippet']['thumbnails']['high']['url']
+    }
+
     user_profile = UserProfile.objects.get(user=request.user)
 
-    videos = getSearchedVideos(search, 6)
     newSearch = Search.objects.create(
-        text = search,
+        text = videoDisplayed['title'],
         date_searched = date.today(),
         user_profile = user_profile,
-        title = videos[0]['title'],
-        thumbnail = videos[0]['thumbnail']
+        title = videoDisplayed['title'],
+        video_id = videoDisplayed['id'],
+        thumbnail = videoDisplayed['thumbnail']
     )
     newSearch.save()
     
@@ -145,8 +199,8 @@ def getRelatedSearch(request, search):
 
     return render(request, 'search.html', {
         'search': newSearch,
-        'videoDisplayed': videos[0],
-        'upNextVideos' : videos[1:]
+        'videoDisplayed': videoDisplayed,
+        'upNextVideos' : videos
         })
     
 

@@ -13,5 +13,6 @@ class Search(models.Model):
     text = models.CharField(max_length=255,default="None")
     user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE, blank=True, null=True)
     title = models.CharField(max_length=255,default="None")
+    video_id = models.CharField(max_length=255,default="None")
     thumbnail = models.ImageField(default='images/default-thumbnail.jpg', upload_to='images')
 
