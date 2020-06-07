@@ -52,6 +52,13 @@
               Subscribe
             </a>
 
+            <form method="POST">
+              {% csrf_token %}
+              <button type="submit" name="logout" >
+                Logout
+              </button>
+            </form>
+
           </div>
         </div> <!-- / .row -->
         <div class="row align-items-center">
