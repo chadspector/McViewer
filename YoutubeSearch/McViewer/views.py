@@ -190,7 +190,8 @@ def loginprofile(request):
     return render(request, 'sign_in.html')
 
 def publicNetwork(request, username):
-    searches = Search.objects.all().order_by('date_searched')[:5]
+    searches = Search.objects.all().order_by('date_searched').reverse()[:5]
+    #searches = reversed(searches_wrong_order)
     return render(request, 'public_network.html', {
         'searches': searches,
         })
