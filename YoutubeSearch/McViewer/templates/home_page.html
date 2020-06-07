@@ -68,12 +68,38 @@
     </div>
   </div>
 
+  
+
   <!-- CONTENT -->
+  {% if numOfSearches < 1 %}
+  <div class="col-12" style="padding: 0em 2.45em;">
+    <div class="alert alert-success" role="alert">
+
+      <!-- Heading -->
+      <h4 class="alert-heading">Welcome to the McViewer Network!</h4>
+
+      <!-- Text -->
+      <p>
+        Seemlessly search through the infinitely vast world of online video content! Check out Our Network to see what people like you are searching for!
+      </p>
+
+      <!-- Divider -->
+      <hr>
+
+      <!-- Text -->
+      <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+
+    </div>
+  </div>
+  {% else %}
+
+  {% endif %}
   <div data-list='{"valueNames": ["name"]}'>
     <div class="container-fluid" data-list='{"valueNames": ["name"], "listClass": "listAlias"}'>
       <div class="row mb-4">
         <div class="col">
 
+          
           <div class="card">
             <div class="card-body">
 
