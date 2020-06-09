@@ -19,7 +19,11 @@
 
                     <!-- Title -->
                     <h1 class="header-title">
-                        {{search.text}}
+                        {% if search.text is None %}
+                        {{ videoDisplayed.title }}
+                        {% else %}
+                        {{search.text }}
+                        {% endif %}
                     </h1>
 
                 </div>
@@ -93,14 +97,15 @@
                     <div class="col-auto">
 
                         <!-- Avatar -->
+                        <a href="{% url 'getRelatedSearch' video.id %}">
                             <img src="{{video.thumbnail}}" alt="..." class="avatar-img rounded">
-
+                        </a>
                     </div>
                     <div class="col ml-n2">
 
                         <!-- Title -->
                         <h4 class="mb-1 name">
-                            <a href="{% url 'getRelatedSearch' %}">{{video.title}}</a>
+                            <a href="{% url 'getRelatedSearch' video.id %}">{{video.title}}</a>
                         </h4>
 
                         <!-- Text -->
