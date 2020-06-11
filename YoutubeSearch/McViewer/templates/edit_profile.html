@@ -6,6 +6,16 @@
 
 {% block content %}
 
+<div class="header">
+    <div class="header-body">
+
+      <h1 class="header-title" style="text-align:center;">
+        Edit Profile
+      </h1>
+  
+    </div>
+  </div>
+
 <div class="card">
     <div class="card-body">
 
@@ -15,11 +25,16 @@
         <div class="form-row">
           <div class="col-12 col-md-6 mb-3">
             <label for="validationServer01">First name</label>
-            <input name="first_name" type="text" class="form-control is-valid" id="validationServer01" placeholder="First name" required>
+            <input type="text" class="form-control is-valid" id="validationServer01" placeholder="First name" required="">
+            <div class="valid-feedback">
+            </div>
           </div>
           <div class="col-12 col-md-6 mb-3">
             <label for="validationServer02">Last name</label>
-            <input name="last_name" type="text" class="form-control is-valid" id="validationServer02" placeholder="Last name" required>
+            <input type="text" class="form-control is-valid" id="validationServer02" placeholder="Last name" required="">
+            <div class="valid-feedback">
+            </div>
+            <input name="first_name" type="text" class="form-control is-valid" id="validationServer01" placeholder="First name" required>
           </div>
         </div>
         <div class="form-row">
@@ -30,17 +45,6 @@
           <div class="col12 col-md-6 mb-3">
             <label for="validationServer04">Change Photo</label>
             <input type="file" name="image">
-          </div>
-        </div>
-        <div class="form-group">
-          <div class="form-check">
-            <input class="form-check-input is-invalid" type="checkbox" value="" id="invalidCheck3" required>
-            <label class="form-check-label" for="invalidCheck3">
-              Agree to terms and conditions
-            </label>
-            <div class="invalid-feedback">
-              You must agree before submitting.
-            </div>
           </div>
         </div>
 
