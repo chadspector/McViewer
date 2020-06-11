@@ -13,6 +13,6 @@ urlpatterns = [
     path('search', views.searchResult, name="search_result"),
     path('getRelatedSearch/<str:search>', views.getRelatedSearch, name="getRelatedSearch"),
     path('edit_profile/<str:username>',views.editProfile, name="edit_profile"),
-    path('public_network/<str:username>', views.publicNetwork, name = "public_network"),
-    path('private_network/<str:username>', views.privateNetwork, name = "private_network")
+    path('network/<str:username>', views.network, name = "network"),
+    path('network/<str:username>/<str:title>', views.privateNetwork, name = "private_network")
 ]
