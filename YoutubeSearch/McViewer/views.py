@@ -14,6 +14,12 @@ from datetime import date
 from .forms import *
 from django.contrib.auth.decorators import login_required
 
+def welcome(request):
+
+    return render(request, "welcome.html", {
+
+    })
+
 @login_required
 def index(request, username):
     user_profile = UserProfile.objects.get(user=request.user)

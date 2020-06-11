@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block content %}
+
+<div class="card" style="display: flex; justify-content: center; margin: 10em 5em;">
+    <div class="card-body text-center">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-xl-8">
+
+                <!-- Image -->
+                <img src="http://127.0.0.1:8000/media/images/logo.jpg"alt="..." class="img-fluid mt-n5 mb-4" style="max-width: 272px;">
+
+                <!-- Title -->
+                <h2>
+                    We released 2008 new versions of our theme to make the world a better place.
+                </h2>
+
+                <!-- Content -->
+                <p class="text-muted">
+                    This is a true story and totally not made up. This is going to be better in the long run but for
+                    now this is the way it is.
+                </p>
+
+                <!-- Button -->
+                <a href="{% url 'sign_up' %}" class="btn btn-primary lift">
+                    Sign up for free
+                </a>
+
+            </div>
+        </div> <!-- / .row -->
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block javascript %}
+
+{% endblock javascript %}
