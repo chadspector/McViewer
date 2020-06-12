@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="{% static '/assets/css/theme.min.css' %}">
       
     <!-- Title -->
-    <title>Dashkit</title>
+    <title>McViewer</title>
 
   </head>
   <body class="d-flex align-items-center bg-auth border-top border-top-2 border-primary">
@@ -36,11 +36,6 @@
           <h1 class="display-4 text-center mb-3">
             Sign up
           </h1>
-          
-          <!-- Subheading -->
-          <p class="text-muted text-center mb-5">
-            Free access to our dashboard.
-          </p>
 
           <!-- Form -->
           <form method="POST">
@@ -54,7 +49,7 @@
               </label>
 
               <!-- Input -->
-              <input name="first_name" type="text" class="form-control" placeholder="David">
+              <input name="first_name" type="text" class="form-control" placeholder="John" required>
 
             </div>
 
@@ -67,7 +62,7 @@
               </label>
 
               <!-- Input -->
-              <input name="last_name" type="text" class="form-control" placeholder="TheGay">
+              <input name="last_name" type="text" class="form-control" placeholder="Smith" required>
 
             </div>
             
@@ -80,7 +75,7 @@
               </label>
 
               <!-- Input -->
-              <input name="username" type="text" class="form-control" placeholder="JonSmith123">
+              <input name="username" type="text" class="form-control" placeholder="JohnSmith123" required>
 
             </div>
 
@@ -93,7 +88,7 @@
               </label>
 
               <!-- Input -->
-              <input name="email" type="email" class="form-control" placeholder="name@address.com">
+              <input name="email" type="email" class="form-control" placeholder="name@address.com" required>
 
             </div>
 
@@ -105,23 +100,23 @@
                 Password
               </label>
 
-              <!-- Input group -->
-              <div class="input-group input-group-merge">
+              <!-- Input -->
+                <input name="password" type="password" class="form-control form-control-appended" placeholder="Enter your password" required>
 
-                <!-- Input -->
-                <input name="password" type="password" class="form-control form-control-appended" placeholder="Enter your password">
-
-                <!-- Icon -->
-                <div class="input-group-append">
-                  <span class="input-group-text">
-                    <i class="fe fe-eye"></i>
-                  </span>
-                </div>
-
-              </div>
             </div>
+            {% if error %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <strong>{{error}}</strong> 
 
-            {{error}}
+              <!-- Button -->
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+
+            </div>
+            {% endif %}
+
+            
 
             <!-- Submit -->
             <button type="submit" name="submitProfile" class="btn btn-lg btn-block btn-primary mb-3">
@@ -131,7 +126,7 @@
             <!-- Link -->
             <div class="text-center">
               <small class="text-muted text-center">
-                Already have an account? <a>Log in</a>.
+                Already have an account? <a href="{% url 'login' %}">Log in</a>.
               </small>
             </div>
 

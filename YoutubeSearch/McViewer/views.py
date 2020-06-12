@@ -15,6 +15,8 @@ from .forms import *
 from django.contrib.auth.decorators import login_required
 
 def welcome(request):
+    if request.user.is_authenticated:
+        return redirect('home_page', username = request.user.username)
 
     return render(request, "welcome.html", {
 
@@ -230,11 +232,11 @@ def editProfile(request, username):
         form = ImageUploadForm(request.POST, request.FILES)
         
         if form.is_valid():
-            image = form.cleaned_data['image']
+            display_picture = form.cleaned_data['image']
+            user_profile.display_picture = display_picture
         
         user.first_name = the_first_name
         user.last_name = the_last_name
-        user_profile.display_picture = image
         user.save()
         user_profile.save()
         return redirect('home_page', username=username)
@@ -254,7 +256,7 @@ def loginprofile(request):
                 context = {'error':'You have entered an invalid password.'}
                 return render(request, 'sign_in.html', context)
         else:   
-            context = {'error':'You have entered an invalid email.'}
+            context = {'error':'You have entered an invalid username or email.'}
             return render(request, 'sign_in.html', context)
 
     return render(request, 'sign_in.html')

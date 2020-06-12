@@ -45,21 +45,6 @@
             </h1>
 
           </div>
-          <div class="col-12 col-md-auto mt-2 mt-md-0 mb-md-3">
-
-            <!-- Button -->
-            <a href="#!" class="btn btn-primary d-block d-md-inline-block lift">
-              Subscribe
-            </a>
-
-            <form method="POST">
-              {% csrf_token %}
-              <button type="submit" name="logout" >
-                Logout
-              </button>
-            </form>
-
-          </div>
         </div> <!-- / .row -->
         <div class="row align-items-center">
           <div class="col">
@@ -168,28 +153,6 @@
                       </p>
 
                     </div>
-                    <div class="col-auto">
-
-                      <!-- Dropdown -->
-                      <div class="dropdown">
-                        <a href="#" class="dropdown-ellipses dropdown-toggle" role="button" data-toggle="dropdown"
-                          aria-haspopup="true" aria-expanded="false">
-                          <i class="fe fe-more-vertical"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                          <a href="#!" class="dropdown-item">
-                            Action
-                          </a>
-                          <a href="#!" class="dropdown-item">
-                            Another action
-                          </a>
-                          <a href="#!" class="dropdown-item">
-                            Something else here
-                          </a>
-                        </div>
-                      </div>
-
-                    </div>
                   </div> <!-- / .row -->
                 </div>
 
@@ -200,44 +163,10 @@
                       <div class="row align-items-center no-gutters">
                         <div class="col-auto">
 
-                          <!-- Value -->
-                          <div class="small mr-2">29%</div>
-
-                        </div>
-                        <div class="col">
-
-                          <!-- Progress -->
-                          <div class="progress progress-sm">
-                            <div class="progress-bar" role="progressbar" style="width: 29%" aria-valuenow="29"
-                              aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
+                          Searched on {{ search.date_searched|date:"F d, Y" }}
 
                         </div>
                       </div> <!-- / .row -->
-                    </div>
-                    <div class="col-auto">
-
-                      <!-- Avatar group -->
-                      <div class="avatar-group">
-                        <a href="profile-posts.html" class="avatar avatar-xs" data-toggle="tooltip" title="Ab Hadley">
-                          <img src="assets/img/avatars/profiles/avatar-2.jpg" alt="..."
-                            class="avatar-img rounded-circle">
-                        </a>
-                        <a href="profile-posts.html" class="avatar avatar-xs" data-toggle="tooltip" title="Adolfo Hess">
-                          <img src="assets/img/avatars/profiles/avatar-3.jpg" alt="..."
-                            class="avatar-img rounded-circle">
-                        </a>
-                        <a href="profile-posts.html" class="avatar avatar-xs" data-toggle="tooltip"
-                          title="Daniela Dewitt">
-                          <img src="assets/img/avatars/profiles/avatar-4.jpg" alt="..."
-                            class="avatar-img rounded-circle">
-                        </a>
-                        <a href="profile-posts.html" class="avatar avatar-xs" data-toggle="tooltip" title="Miyah Myles">
-                          <img src="assets/img/avatars/profiles/avatar-5.jpg" alt="..."
-                            class="avatar-img rounded-circle">
-                        </a>
-                      </div>
-
                     </div>
                   </div> <!-- / .row -->
                 </div>
@@ -281,65 +210,13 @@
                         <div class="col-auto">
 
                           <!-- Value -->
-                          <div class="small mr-2">29%</div>
-
-                        </div>
-                        <div class="col">
-
-                          <!-- Progress -->
-                          <div class="progress progress-sm">
-                            <div class="progress-bar" role="progressbar" style="width: 29%" aria-valuenow="29"
-                              aria-valuemin="0" aria-valuemax="100"></div>
-                          </div>
+                          <div class="small mr-2">Searched on {{ search.date_searched|date:"F d, Y" }}</div>
 
                         </div>
                       </div> <!-- / .row -->
 
                     </div>
                     <div class="col-auto">
-
-                      <!-- Avatar group -->
-                      <div class="avatar-group d-none d-md-inline-flex">
-                        <a href="profile-posts.html" class="avatar avatar-xs" data-toggle="tooltip" title="Ab Hadley">
-                          <img src="assets/img/avatars/profiles/avatar-2.jpg" class="avatar-img rounded-circle"
-                            alt="...">
-                        </a>
-                        <a href="profile-posts.html" class="avatar avatar-xs" data-toggle="tooltip" title="Adolfo Hess">
-                          <img src="assets/img/avatars/profiles/avatar-3.jpg" class="avatar-img rounded-circle"
-                            alt="...">
-                        </a>
-                        <a href="profile-posts.html" class="avatar avatar-xs" data-toggle="tooltip"
-                          title="Daniela Dewitt">
-                          <img src="assets/img/avatars/profiles/avatar-4.jpg" class="avatar-img rounded-circle"
-                            alt="...">
-                        </a>
-                        <a href="profile-posts.html" class="avatar avatar-xs" data-toggle="tooltip" title="Miyah Myles">
-                          <img src="assets/img/avatars/profiles/avatar-5.jpg" class="avatar-img rounded-circle"
-                            alt="...">
-                        </a>
-                      </div>
-
-                    </div>
-                    <div class="col-auto">
-
-                      <!-- Dropdown -->
-                      <div class="dropdown">
-                        <a href="#" class="dropdown-ellipses dropdown-toggle" role="button" data-toggle="dropdown"
-                          aria-haspopup="true" aria-expanded="false">
-                          <i class="fe fe-more-vertical"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right">
-                          <a href="#!" class="dropdown-item">
-                            Action
-                          </a>
-                          <a href="#!" class="dropdown-item">
-                            Another action
-                          </a>
-                          <a href="#!" class="dropdown-item">
-                            Something else here
-                          </a>
-                        </div>
-                      </div>
 
                     </div>
                   </div> <!-- / .row -->

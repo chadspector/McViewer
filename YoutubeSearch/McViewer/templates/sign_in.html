@@ -37,11 +37,6 @@
             Sign in
           </h1>
           
-          <!-- Subheading -->
-          <p class="text-muted text-center mb-5">
-            Free access to our dashboard.
-          </p>
-          
           <!-- Form -->
           <form method="POST">
             {% csrf_token %}
@@ -52,7 +47,7 @@
               <label>Email Address</label>
 
               <!-- Input -->
-              <input name = "email" type="email" class="form-control" placeholder="name@address.com">
+              <input name = "email" type="email" class="form-control" placeholder="name@address.com" required>
 
             </div>
 
@@ -66,32 +61,27 @@
                   <label>Password</label>
 
                 </div>
-                <div class="col-auto">
-                  
-                  <!-- Help text -->
-                  <a href="password-reset.html" class="form-text small text-muted">
-                    Forgot password?
-                  </a>
-
-                </div>
+              
               </div> <!-- / .row -->
 
               <!-- Input group -->
-              <div class="input-group input-group-merge">
+
 
                 <!-- Input -->
-                <input name = "password" type="password" class="form-control form-control-appended" placeholder="Enter your password">
+                <input name = "password" type="password" class="form-control form-control-appended" placeholder="Enter your password" required>
 
-                <!-- Icon -->
-                <div class="input-group-append">
-                  <span class="input-group-text">
-                    <i class="fe fe-eye"></i>
-                  </span>
-                </div>
-
-              </div>
             </div>
-            {{error}}
+            {% if error %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              <strong>{{error}}</strong> 
+
+              <!-- Button -->
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+
+            </div>
+            {% endif %}
             <!-- Submit -->
             <button name = "login" class="btn btn-lg btn-block btn-primary mb-3">
               Sign in
