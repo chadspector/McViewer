@@ -259,6 +259,7 @@ def loginprofile(request):
             context = {'error':'You have entered an invalid username or email.'}
             return render(request, 'sign_in.html', context)
 
+    logout(request)
     return render(request, 'sign_in.html')
 
 def network(request, username):
