@@ -222,8 +222,17 @@
                     <br>
                     {{error}}
                 </form>
-
-
+                <br>
+                <br>
+                <form method="POST">
+                    {% csrf_token %}
+                    <h2>
+                        Create a private network!
+                    </h2>
+                    <button type="submit" name="create_network">
+                        Create Network!
+                    </button>
+                </form>
             </div>
         </div> <!-- / .row -->
     </div>

@@ -279,11 +279,17 @@ def network(request, username):
                 'error':'A private network with this referral code does not exist.',
                 'searches':searches,
             })
+
+    if request.method == "POST" and "create_network" in request.POST:
+        return redirect('create_network', username = username)
+
     return render(request, 'public_network.html', {
         'searches': searches,
         })
 
-
+def createNetwork(request, username):
+    print("getting here")
+    return render(request, 'create_network.html')
 
 def privateNetwork(request, username, title):
     return render(request, 'private_network.html')
