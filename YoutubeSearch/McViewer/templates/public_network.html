@@ -1,0 +1,238 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+
+{% block content %}
+<div class="main-content">
+
+
+
+    <!-- HEADER -->
+    <div class="header">
+
+        <!-- Image -->
+        <img src="assets/img/covers/team-cover.jpg" class="header-img-top" alt="...">
+
+        <div class="container-fluid">
+
+            <!-- Body -->
+            <div class="header-body mt-n5 mt-md-n6">
+                <div class="row align-items-end">
+                    <div class="col-auto">
+
+                        <!-- Avatar -->
+                        <div class="avatar avatar-xxl header-avatar-top">
+                            <img src="assets/img/avatars/teams/team-logo-1.jpg" alt="..."
+                                class="avatar-img rounded border border-4 border-body">
+                        </div>
+
+                    </div>
+                    <div class="col mb-3 ml-n3 ml-md-n2">
+
+                        <!-- Pretitle -->
+                        <h6 class="header-pretitle">
+                            Groups
+                        </h6>
+
+                        <!-- Title -->
+                        <h1 class="header-title">
+                            Launchday
+                        </h1>
+
+                    </div>
+                    <div class="col-12 col-md-auto mt-2 mt-md-0 mb-md-3">
+
+                        <!-- Button -->
+                        <a href="#!" class="btn btn-primary d-block d-md-inline-block lift">
+                            Join
+                        </a>
+
+                    </div>
+                </div> <!-- / .row -->
+            </div> <!-- / .header-body -->
+
+        </div>
+
+    </div> <!-- / .header -->
+
+    <!-- CONTENT -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 col-xl-8">
+
+                <!-- Card -->
+                {% for search in searches %}
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <div class="row align-items-center">
+                            <div class="col-auto">
+
+                                <!-- Avatar -->
+                                <a href="profile-posts.html" class="avatar avatar-lg">
+                                    <img src="{{ search.thumbnail }}" alt="..." class="avatar-img rounded-circle">
+                                </a>
+
+                            </div>
+
+                            <div class="col ml-n2">
+
+                                <!-- Title -->
+                                <h4 class="mb-1">
+                                    <a href="profile-posts.html">{{ search.text }}</a>
+                                </h4>
+
+                                <!-- Text -->
+                                <p class="card-text small text-muted mb-1">
+                                    {{ search.title }}
+                                </p>
+
+
+
+                            </div>
+
+                        </div> <!-- / .row -->
+                    </div> <!-- / .card-body -->
+                </div>
+                {% endfor %}
+
+            </div>
+            <div class="col-12 col-xl-4">
+
+                <!-- Card -->
+                <div class="card">
+                    <div class="card-body">
+
+                        <!-- List group -->
+                        <div class="list-group list-group-flush my-n3">
+                            <div class="list-group-item">
+                                <div class="row align-items-center">
+                                    <div class="col">
+
+                                        <!-- Title -->
+                                        <h5 class="mb-0">
+                                            Member Count
+                                        </h5>
+
+                                    </div>
+                                    <div class="col-auto">
+
+                                        <!-- Text -->
+                                        <small class="text-muted">
+                                            129
+                                        </small>
+
+                                    </div>
+                                </div> <!-- / .row -->
+                            </div>
+                            <div class="list-group-item">
+                                <div class="row align-items-center">
+                                    <div class="col">
+
+                                        <!-- Title -->
+                                        <h5 class="mb-0">
+                                            Created
+                                        </h5>
+
+                                    </div>
+                                    <div class="col-auto">
+
+                                        <!-- Time -->
+                                        <time class="small text-muted" datetime="2018-10-28">
+                                            10/24/18
+                                        </time>
+
+                                    </div>
+                                </div> <!-- / .row -->
+                            </div>
+                            <div class="list-group-item">
+                                <div class="row align-items-center">
+                                    <div class="col">
+
+                                        <!-- Title -->
+                                        <h5 class="mb-0">
+                                            Slack Channel
+                                        </h5>
+
+                                    </div>
+                                    <div class="col-auto">
+
+                                        <!-- Link -->
+                                        <a href="#!" class="small">
+                                            #bloomers
+                                        </a>
+
+                                    </div>
+                                </div> <!-- / .row -->
+                            </div>
+                            <div class="list-group-item">
+                                <div class="row align-items-center">
+                                    <div class="col">
+
+                                        <!-- Title -->
+                                        <h5 class="mb-0">
+                                            Privacy
+                                        </h5>
+
+                                    </div>
+                                    <div class="col-auto">
+
+                                        <!-- Text -->
+                                        <small class="text-muted">
+                                            Public
+                                        </small>
+
+                                    </div>
+                                </div> <!-- / .row -->
+                            </div>
+                            <div class="list-group-item">
+                                <div class="row align-items-center">
+                                    <div class="col">
+
+                                        <!-- Title -->
+                                        <h5 class="mb-0">
+                                            Owner
+                                        </h5>
+
+                                    </div>
+                                    <div class="col-auto">
+
+                                        <!-- Link -->
+                                        <a href="#!" class="small">
+                                            Dianna Smiley
+                                        </a>
+
+                                    </div>
+                                </div> <!-- / .row -->
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <h2>
+                        Join a private network!
+                    </h2>
+                    <input type="text" name="code">
+                    <button type="submit" name="join_network">
+                        Join Network!
+                    </button>
+                    <br>
+                    {{error}}
+                </form>
+
+
+            </div>
+        </div> <!-- / .row -->
+    </div>
+
+</div>
+
+
+{% endblock content %}
+
+{% block javascript %}
+
+{% endblock javascript %}

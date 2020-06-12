@@ -16,3 +16,12 @@ class Search(models.Model):
     video_id = models.CharField(max_length=255,default="None")
     thumbnail = models.ImageField(default='images/default-thumbnail.jpg', upload_to='images')
 
+class PrivateNetwork(models.Model):
+    user = models.ManyToManyField(UserProfile, blank=True)
+    referral_code = models.CharField(max_length=255,default="None")
+    title = models.CharField(max_length=255,default="None")
+    date_created = models.DateTimeField(default=timezone.now)
+    
+
+
+

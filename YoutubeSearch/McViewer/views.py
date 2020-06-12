@@ -45,7 +45,7 @@ def signUp(request):
             context = {'error':'The username you entered has already been taken. Please try another username.'}
             return render(request, 'sign_up.html', context)
 
-        if User.objects.filter(email=the_email).exists():
+        elif User.objects.filter(email=the_email).exists():
             context = {'error':'The email you entered has already been taken. Please try another email.'}
             return render(request, 'sign_up.html', context)
 
@@ -258,3 +258,30 @@ def loginprofile(request):
             return render(request, 'sign_in.html', context)
 
     return render(request, 'sign_in.html')
+
+def network(request, username):
+    searches_wrong_order = Search.objects.all().order_by('date_searched')[:5]
+    searches = reversed(searches_wrong_order)
+    print("method")
+    print("join_network" in request.POST)
+    if request.method == "POST" and "join_network" in request.POST:
+        print("getting here")
+        the_referral_code = request.POST.get("code")
+        if PrivateNetwork.objects.filter(referral_code = the_referral_code).exists():
+            private_network = PrivateNetwork.objects.get(referral_code = the_referral_code)
+            return redirect('private_network', username = username, title = private_network.title)
+
+        else:
+            print("nothing doin")
+            return render(request, 'public_network.html', {
+                'error':'A private network with this referral code does not exist.',
+                'searches':searches,
+            })
+    return render(request, 'public_network.html', {
+        'searches': searches,
+        })
+
+
+
+def privateNetwork(request, username, title):
+    return render(request, 'private_network.html')
