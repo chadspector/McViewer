@@ -60,28 +60,7 @@
                         </p>
 
                     </div>
-                    <div class="col-auto">
-
-                        <!-- Dropdown -->
-                        <div class="dropdown">
-                            <a href="#" class="dropdown-ellipses dropdown-toggle" role="button" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <i class="fe fe-more-vertical"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a href="#!" class="dropdown-item">
-                                    Action
-                                </a>
-                                <a href="#!" class="dropdown-item">
-                                    Another action
-                                </a>
-                                <a href="#!" class="dropdown-item">
-                                    Something else here
-                                </a>
-                            </div>
-                        </div>
-
-                    </div>
+                
                 </div> <!-- / .row -->
             </div>
 
@@ -90,57 +69,41 @@
     <div class="up_next_videos" style="width: 30%; margin-left: 2em;">
         <h1>More Results:</h1>
         {% for video in upNextVideos %}
-        
         <div class="card">
             <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col-auto">
+              <div class="row align-items-center">
+                <div class="col-auto">
 
-                        <!-- Avatar -->
-                        <a href="{% url 'getRelatedSearch' video.id %}">
-                            <img src="{{video.thumbnail}}" alt="..." class="avatar-img rounded">
-                        </a>
-                    </div>
-                    <div class="col ml-n2">
+                  <!-- Avatar -->
+                  <a href="{% url 'getRelatedSearch' video.id %}" class="avatar avatar-lg avatar-4by3">
+                    <img src="{{video.thumbnail}}" alt="..." class="avatar-img rounded">
+                  </a>
 
-                        <!-- Title -->
-                        <h4 class="mb-1 name">
-                            <a href="{% url 'getRelatedSearch' video.id %}">{{video.title}}</a>
-                        </h4>
+                </div>
+                <div class="col ml-n2">
 
-                        <!-- Text -->
-                        <p class="card-text small text-muted mb-1">
-                            <time datetime="2018-06-21">{{video.duration}}</time>
-                        </p>
+                  <!-- Title -->
+                  <h4 class="mb-1 name">
+                    <a href="{% url 'getRelatedSearch' video.id %}">{{video.title}}</a>
+                  </h4>
+
+                  <!-- Text -->
+                  <p class="card-text small text-muted mb-1">
+                    <time datetime="2018-06-21">{{video.duration}}</time>
+                  </p>
 
 
-                    </div>
+                </div>
+                <div class="col-auto">
 
-                    <div class="col-auto">
+        
 
-                        <!-- Dropdown -->
-                        <div class="dropdown">
-                            <a href="#" class="dropdown-ellipses dropdown-toggle" role="button" data-toggle="dropdown"
-                                aria-haspopup="true" aria-expanded="false">
-                                <i class="fe fe-more-vertical"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a href="#!" class="dropdown-item">
-                                    Action
-                                </a>
-                                <a href="#!" class="dropdown-item">
-                                    Another action
-                                </a>
-                                <a href="#!" class="dropdown-item">
-                                    Something else here
-                                </a>
-                            </div>
-                        </div>
-
-                    </div>
-                </div> <!-- / .row -->
+                </div>
+            
+              </div> <!-- / .row -->
             </div> <!-- / .card-body -->
         </div>
+
         {% endfor %}
     </div>
 </div>

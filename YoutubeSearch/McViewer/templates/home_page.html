@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 
 {% load static %}
@@ -33,7 +32,6 @@
 
           </div>
           <div class="col mb-3 ml-n3 ml-md-n2">
-
             <!-- Pretitle -->
             <h6 class="header-pretitle">
               Welcome to the McViewer Network,
@@ -45,6 +43,7 @@
             </h1>
 
           </div>
+
         </div> <!-- / .row -->
         <div class="row align-items-center">
           <div class="col">
@@ -60,7 +59,7 @@
     </div>
   </div>
 
-  
+
 
   <!-- CONTENT -->
   {% if numOfSearches < 1 %}
@@ -69,17 +68,15 @@
 
       <!-- Heading -->
       <h4 class="alert-heading">Welcome to the McViewer Network!</h4>
-
-      <!-- Text -->
-      <p>
-        Seemlessly search through the infinitely vast world of online video content! Check out Our Network to see what people like you are searching for!
-      </p>
-
+      
       <!-- Divider -->
       <hr>
 
       <!-- Text -->
-      <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+      <p>
+        Seemlessly search through the infinitely vast world of online video content! Check out Our Network to see what
+        people like you are searching for!
+      </p>
 
     </div>
   </div>
@@ -90,18 +87,19 @@
       <div class="row mb-4">
         <div class="col">
 
-          
+
           <div class="card">
             <div class="card-body">
 
               <!-- Form -->
               <form action="{% url 'search_result' %}" method="GET">
                 {% csrf_token %}
-                <input type="text" name="search" class="form-control form-control-rounded" placeholder="Search Here!" required>
+                <input type="text" name="search" class="form-control form-control-rounded" placeholder="Search Here!"
+                  required>
               </form>
 
             </div>
-          
+
           </div>
 
         </div>
@@ -174,7 +172,7 @@
 
             </div>
             {% endfor %}
-            
+
           </div> <!-- / .row -->
         </div>
         <div class="tab-pane fade" id="tabPaneTwo" role="tabpanel">
@@ -189,7 +187,7 @@
 
                       <!-- Avatar -->
                       <a href="{% url 'getRelatedSearch' search.video_id %}" class="avatar avatar-lg avatar-4by3">
-                        <img src="{{ search.thumbnail }}"" alt="..." class="avatar-img rounded">
+                        <img src="{{ search.thumbnail }}"" alt=" ..." class="avatar-img rounded">
                       </a>
 
                     </div>
