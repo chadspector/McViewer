@@ -262,9 +262,11 @@ def loginprofile(request):
     logout(request)
     return render(request, 'sign_in.html')
 
+@login_required
 def network(request, username):
     searches_wrong_order = Search.objects.all().order_by('date_searched')[:5]
     searches = reversed(searches_wrong_order)
+    count = UserProfile.objects.all().count
     print("method")
     print("join_network" in request.POST)
     if request.method == "POST" and "join_network" in request.POST:
@@ -281,16 +283,23 @@ def network(request, username):
                 'searches':searches,
             })
 
-    if request.method == "POST" and "create_network" in request.POST:
+    elif request.method == "POST" and "create_network" in request.POST:
         return redirect('create_network', username = username)
 
     return render(request, 'public_network.html', {
         'searches': searches,
+        'count':count,
         })
 
+@login_required
 def createNetwork(request, username):
-    print("getting here")
+    if request.method == "POST" and "createNetwork" in request.POST:
+        the_referral_code = request.POST.get("referral-code")
+        the_name = request.POST.get("network_name")
+        PrivateNetwork.objects.create(title = the_name, referral_code = the_referral_code)
+        return redirect('private_network', username = username, title = the_name)
     return render(request, 'create_network.html')
 
+@login_required
 def privateNetwork(request, username, title):
     return render(request, 'private_network.html')

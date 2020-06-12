@@ -16,5 +16,5 @@ urlpatterns = [
     path('edit_profile/<str:username>',views.editProfile, name="edit_profile"),
     path('network/<str:username>', views.network, name = "network"),
     path('network/<str:username>/<str:title>', views.privateNetwork, name = "private_network"),
-    path('network/create_network/<str:username>', views.createNetwork, name = "create_network")
+    path('create_network/<str:username>', views.createNetwork, name = "create_network")
 ]

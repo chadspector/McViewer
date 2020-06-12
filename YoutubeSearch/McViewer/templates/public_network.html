@@ -10,49 +10,14 @@
 
     <!-- HEADER -->
     <div class="header">
+        <br>
+        <br>
+        <h1 class="header-title">
+            Global Network
+        </h1>
 
         <!-- Image -->
-        <img src="assets/img/covers/team-cover.jpg" class="header-img-top" alt="...">
 
-        <div class="container-fluid">
-
-            <!-- Body -->
-            <div class="header-body mt-n5 mt-md-n6">
-                <div class="row align-items-end">
-                    <div class="col-auto">
-
-                        <!-- Avatar -->
-                        <div class="avatar avatar-xxl header-avatar-top">
-                            <img src="assets/img/avatars/teams/team-logo-1.jpg" alt="..."
-                                class="avatar-img rounded border border-4 border-body">
-                        </div>
-
-                    </div>
-                    <div class="col mb-3 ml-n3 ml-md-n2">
-
-                        <!-- Pretitle -->
-                        <h6 class="header-pretitle">
-                            Groups
-                        </h6>
-
-                        <!-- Title -->
-                        <h1 class="header-title">
-                            Launchday
-                        </h1>
-
-                    </div>
-                    <div class="col-12 col-md-auto mt-2 mt-md-0 mb-md-3">
-
-                        <!-- Button -->
-                        <a href="#!" class="btn btn-primary d-block d-md-inline-block lift">
-                            Join
-                        </a>
-
-                    </div>
-                </div> <!-- / .row -->
-            </div> <!-- / .header-body -->
-
-        </div>
 
     </div> <!-- / .header -->
 
@@ -119,7 +84,7 @@
 
                                         <!-- Text -->
                                         <small class="text-muted">
-                                            129
+                                            {{count}}
                                         </small>
 
                                     </div>
@@ -139,28 +104,8 @@
 
                                         <!-- Time -->
                                         <time class="small text-muted" datetime="2018-10-28">
-                                            10/24/18
+                                            June 14, 2020
                                         </time>
-
-                                    </div>
-                                </div> <!-- / .row -->
-                            </div>
-                            <div class="list-group-item">
-                                <div class="row align-items-center">
-                                    <div class="col">
-
-                                        <!-- Title -->
-                                        <h5 class="mb-0">
-                                            Slack Channel
-                                        </h5>
-
-                                    </div>
-                                    <div class="col-auto">
-
-                                        <!-- Link -->
-                                        <a href="#!" class="small">
-                                            #bloomers
-                                        </a>
 
                                     </div>
                                 </div> <!-- / .row -->
@@ -185,26 +130,6 @@
                                     </div>
                                 </div> <!-- / .row -->
                             </div>
-                            <div class="list-group-item">
-                                <div class="row align-items-center">
-                                    <div class="col">
-
-                                        <!-- Title -->
-                                        <h5 class="mb-0">
-                                            Owner
-                                        </h5>
-
-                                    </div>
-                                    <div class="col-auto">
-
-                                        <!-- Link -->
-                                        <a href="#!" class="small">
-                                            Dianna Smiley
-                                        </a>
-
-                                    </div>
-                                </div> <!-- / .row -->
-                            </div>
                         </div>
 
                     </div>
@@ -221,11 +146,8 @@
                     </button>
                     <br>
                     {{error}}
-                </form>
-                <br>
-                <br>
-                <form method="POST">
-                    {% csrf_token %}
+                    <br>
+                    <br>
                     <h2>
                         Create a private network!
                     </h2>

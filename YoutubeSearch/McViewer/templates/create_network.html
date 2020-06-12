@@ -14,7 +14,7 @@
 
                   <!-- Title -->
                   <h1 class="header-title">
-                      My Profile
+                      Create a Private Network
                   </h1>
 
               </div>
@@ -33,30 +33,23 @@
       {% csrf_token %}
       <div class="form-row">
         <div class="col-12 col-md-6 mb-3">
-          <label for="validationServer01">First name</label>
-          <input value="{{request.user.first_name}}" name="first_name" type="text" class="form-control is-valid"
-            id="validationServer01" placeholder="First name" required>
+          <label for="validationServer01">Network Name</label>
+          <input name="network_name" type="text" class="form-control is-valid"
+            id="validationServer01" placeholder="Name" required>
           <div class="valid-feedback">
           </div>
         </div>
         <div class="col-12 col-md-6 mb-3">
-          <label for="validationServer02">Last name</label>
-          <input name="last_name" value="{{request.user.last_name}}" type="text" class="form-control is-valid"
-            id="validationServer02" placeholder="Last name" required>
+          <label for="validationServer02">Referral Code</label>
+          <input name="referral-code" type="text" class="form-control is-valid"
+            id="validationServer02" placeholder="Code" required>
           <div class="valid-feedback">
           </div>
         </div>
       </div>
-      <div class="form-row">
-        <div class="col12 col-md-6 mb-3">
-          <label for="validationServer04">Display Picture</label>
-          <br>
-          <input type="file" name="image" accept="image/*">
-        </div>
-      </div>
 
       <!-- Button -->
-      <button class="btn btn-primary" name="editProfile" type="submit">Save Changes</button>
+      <button class="btn btn-primary" name="createNetwork" type="submit">Create Network</button>
     </form>
 
   </div>
