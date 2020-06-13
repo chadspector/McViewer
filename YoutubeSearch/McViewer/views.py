@@ -255,6 +255,12 @@ def editProfile(request):
     if request.method == "POST" and "editProfile" in request.POST:
         the_first_name = request.POST.get("first_name")
         the_last_name = request.POST.get("last_name")
+        new_email = request.POST.get("email")
+
+        if User.objects.filter(email=new_email).exists():
+            context = {'error':'The email you entered has already been taken. Please try another email.'}
+            return render(request, 'edit_profile.html', context)
+
         form = ImageUploadForm(request.POST, request.FILES)
         
         if form.is_valid():
@@ -263,6 +269,7 @@ def editProfile(request):
         
         user.first_name = the_first_name
         user.last_name = the_last_name
+        user.email = new_email
         user.save()
         user_profile.save()
         return redirect('home_page')
