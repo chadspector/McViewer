@@ -15,22 +15,22 @@ from django.contrib.auth.decorators import login_required
 
 
 def welcome(request):
-    if request.user.is_authenticated():
+    if request.user.is_authenticated:
         return redirect('home_page')
-
     return render(request, "welcome.html")
 
 @login_required(login_url='login')
 def index(request):
     user_profile = UserProfile.objects.get(user=request.user)
-    recent_searches = Search.objects.filter(user_profile=user_profile)
+    searches = Search.objects.filter(user_profile=user_profile).order_by('date_searched')
+    recent_searches = reversed(searches)
     if request.method == "POST" and "logout" in request.POST:
         logout(request)
         return redirect('login')
     return render(request, 'home_page.html', {
         'userprofile': user_profile,
         'recentSearches': recent_searches,
-        'numOfSearches': len(recent_searches)
+        'numOfSearches': len(searches)
     })
 
 def signUp(request):
@@ -71,7 +71,7 @@ def loginprofile(request):
                 context = {'error':'You have entered an invalid password.'}
                 return render(request, 'sign_in.html', context)
         else:   
-            context = {'error':'You have entered an invalid username or email.'}
+            context = {'error':'You have entered an invalid email.'}
             return render(request, 'sign_in.html', context)
 
     logout(request)
@@ -84,19 +84,30 @@ def searchResult(request):
             search = request.GET.get("search")
             user_profile = UserProfile.objects.get(user=request.user)
 
-            videos = getSearchedVideos(search, 6)
-            newSearch = Search.objects.create(
-                text = search,
-                date_searched = date.today(),
-                user_profile = user_profile,
-                title = videos[0]['title'],
-                video_id = videos[0]['id'],
-                thumbnail = videos[0]['thumbnail']
-            )
+            videos = getSearchedVideos(search, 7)
             
-            if Search.objects.filter(user_profile=user_profile).count() > 3:
-                earliest_search = Search.objects.filter(user_profile=user_profile).order_by('id').first()
-                earliest_search.delete()
+            if Search.objects.filter(user_profile=user_profile, title=videos[0]['title']).exists():
+                newSearch = Search.objects.get(user_profile=user_profile, title=videoDisplayed['title'])
+                newSearch.text = videoDisplayed['title']
+                newSearch.date_searched = date.today()
+            elif Search.objects.filter(user_profile=user_profile, text=videos[0]['title']).exists():
+                newSearch = Search.objects.get(user_profile=user_profile, text=videoDisplayed['title'])
+                newSearch.title = videoDisplayed['title']
+                newSearch.date_searched = date.today()
+            else: 
+                newSearch = Search.objects.create(
+                    text = search,
+                    date_searched = date.today(),
+                    user_profile = user_profile,
+                    title = videos[0]['title'],
+                    video_id = videos[0]['id'],
+                    thumbnail = videos[0]['thumbnail']
+                )
+            
+                if Search.objects.filter(user_profile=user_profile).count() > 3:
+                    earliest_search = Search.objects.filter(user_profile=user_profile).order_by('id').first()
+                    earliest_search.delete()
+            newSearch.save()
 
             return render(request, 'search.html', {
                 'search': newSearch,
@@ -259,7 +270,7 @@ def editProfile(request):
 
 @login_required(login_url='login')
 def network(request):
-    searches_wrong_order = Search.objects.all().order_by('date_searched')[:5]
+    searches_wrong_order = Search.objects.all().order_by('date_searched')[:6]
     searches = reversed(searches_wrong_order)
     count = UserProfile.objects.all().count()
     user_profile = UserProfile.objects.get(user = request.user)
@@ -317,8 +328,8 @@ def privateNetwork(request, referral_code):
         for user in users:
             for search in Search.objects.filter(user_profile=user):
                 unsorted_searches.append(search)
-        unsorted_searches.sort(key=lambda x: x.date_searched)
-        searches = unsorted_searches[:5]
+        searches_wrong_order = unsorted_searches.order_by('date_searched')[:6]
+        searches = reversed(searches_wrong_order)
         return render(request, 'private_network.html', {
             'searches': searches,
             'network':network,

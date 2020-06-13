@@ -12,7 +12,7 @@
       <div class="header">
 
         <!-- Image -->
-        <img src="assets/img/covers/team-cover.jpg" class="header-img-top" alt="...">
+        <img src="http://127.0.0.1:8000/media/images/private-network.jpg" class="header-img-top" alt="...">
   
         <div class="container-fluid">
   
@@ -23,7 +23,7 @@
   
                 <!-- Avatar -->
                 <div class="avatar avatar-xxl header-avatar-top">
-                  <img src="assets/img/avatars/teams/team-logo-1.jpg" alt="..." class="avatar-img rounded border border-4 border-body">
+                  <img src="{{ request.user.userprofile.display_picture.url }}" alt="..." class="avatar-img rounded border border-4 border-body">
                 </div>
   
               </div>
@@ -56,7 +56,7 @@
                             <div class="col-auto">
 
                                 <!-- Avatar -->
-                                <a href="profile-posts.html" class="avatar avatar-lg">
+                                <a href="{% url 'getRelatedSearch' search.video_id %}" class="avatar avatar-lg">
                                     <img src="{{ search.thumbnail }}" alt="..." class="avatar-img rounded-circle">
                                 </a>
 
@@ -66,7 +66,7 @@
 
                                 <!-- Title -->
                                 <h4 class="mb-1">
-                                    <a href="profile-posts.html">{{ search.text }}</a>
+                                    <a href="{% url 'getRelatedSearch' search.video_id %}">{{ search.text }}</a>
                                 </h4>
 
                                 <!-- Text -->

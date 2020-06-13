@@ -58,7 +58,6 @@
             
             <ul class="navbar-nav">
                 {% if request.user.is_authenticated %}
-                {% with request.user as user %}
                 <li class="nav-item">
                     <a class="nav-link " href="{% url 'home_page' %}">
                         <i class="fe fe-home"></i><span  style="font-weight: 800; text-decoration: underline;">Home</span>
@@ -75,7 +74,7 @@
                     </a>
                 </li>
 
-                {% endwith %}
+
                 {% else %}
                 <li class="nav-item">
                     <a class="nav-link " href="{% url 'login' %}">
