@@ -1,6 +1,10 @@
 # McViewer Documentation
 
-## Here were gonna talk some smack
+## Wiki Link
+
+* For further explanation of the features of this project, check out the [project wiki](https://github.com/McGill-ECSE321-Fall2019/project-group-19/wiki). 
+
+## Development Process
 
 	In this project, I created my own version of a YouTube viewer using the Django framework with the help of the YouTube API. My application is called McViewer, representing the McGill chapter of TAMID. 
 	Upon reaching the base homepage of McViewer on the web browser of their choice, the client is shown the McViewer logo, a brief description of what the app does, as well as a button to sign up. Should the user already have an account, the sidebar contains a sign in button for the user to sign in appropriately.
