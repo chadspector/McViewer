@@ -14,3 +14,5 @@ One by one, I would write a URL path in the urls.py file and then I would write 
 The main challenged I faced throughout the development of McViewer actually occured at the very beggining. As many developpers know, it is often the configuration of settings files and databases that prove most challenging in web development projects. I had never used Heroku before but decided it was time to learn! I had to get some help from a friend of mine who helped configure Heroku properly with my Django app. Im thankful to have encountered this challenge because I definitely came out of it with more knowledge on how to deploy my future projects to the cloud. 
 
 ## Additional Features
+
+For this project I really wanted to try to show off my skills at building a system that allows users to interact with one another. A  something that users can collaborate on and really just developing a system that ha
