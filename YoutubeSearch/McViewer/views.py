@@ -267,17 +267,13 @@ def network(request, username):
     searches_wrong_order = Search.objects.all().order_by('date_searched')[:5]
     searches = reversed(searches_wrong_order)
     count = UserProfile.objects.all().count
-    print("method")
-    print("join_network" in request.POST)
     if request.method == "POST" and "join_network" in request.POST:
-        print("getting here")
         the_referral_code = request.POST.get("code")
         if PrivateNetwork.objects.filter(referral_code = the_referral_code).exists():
             private_network = PrivateNetwork.objects.get(referral_code = the_referral_code)
-            return redirect('private_network', username = username, title = private_network.title)
+            return redirect('private_network', username = username, referral_code = the_referral_code)
 
         else:
-            print("nothing doin")
             return render(request, 'public_network.html', {
                 'error':'A private network with this referral code does not exist.',
                 'searches':searches,
@@ -302,9 +298,9 @@ def createNetwork(request, username):
             })
         else:
             PrivateNetwork.objects.create(title = the_name, referral_code = the_referral_code)
-            return redirect('private_network', username = username, title = the_name)
+            return redirect('private_network', username = username, referral_code = the_referral_code)
     return render(request, 'create_network.html')
 
 @login_required
-def privateNetwork(request, username, title):
+def privateNetwork(request, username, referral_code):
     return render(request, 'private_network.html')
