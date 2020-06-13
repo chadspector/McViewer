@@ -296,8 +296,13 @@ def createNetwork(request, username):
     if request.method == "POST" and "createNetwork" in request.POST:
         the_referral_code = request.POST.get("referral-code")
         the_name = request.POST.get("network_name")
-        PrivateNetwork.objects.create(title = the_name, referral_code = the_referral_code)
-        return redirect('private_network', username = username, title = the_name)
+        if PrivateNetwork.objects.filter(referral_code = the_referral_code).exists():
+            return render(request, 'create_network.html', {
+                'error':'A private network with this referral code already exists.',
+            })
+        else:
+            PrivateNetwork.objects.create(title = the_name, referral_code = the_referral_code)
+            return redirect('private_network', username = username, title = the_name)
     return render(request, 'create_network.html')
 
 @login_required
