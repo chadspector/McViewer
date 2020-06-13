@@ -9,7 +9,7 @@
         </button>
         <!-- Brand -->
         
-        <a style="display: flex; justify-content: center;"href="{% if request.user.is_authenticated %} {% url 'home_page' request.user.username %} {% else %} {% url 'welcome' %} {% endif %}">
+        <a style="display: flex; justify-content: center;"href="{% if request.user.is_authenticated %} {% url 'home_page' %} {% else %} {% url 'welcome' %} {% endif %}">
             <img src="http://127.0.0.1:8000/media/images/logo.jpg" width="50%" height="50%" alt="..." >
         </a> 
         
@@ -60,17 +60,17 @@
                 {% if request.user.is_authenticated %}
                 {% with request.user as user %}
                 <li class="nav-item">
-                    <a class="nav-link " href="{% url 'home_page' user %}">
+                    <a class="nav-link " href="{% url 'home_page' %}">
                         <i class="fe fe-home"></i><span  style="font-weight: 800; text-decoration: underline;">Home</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="{% url 'edit_profile' user.username %}">
+                    <a class="nav-link " href="{% url 'edit_profile' %}">
                         <i class="fe fe-user"></i><span  style="font-weight: 800; text-decoration: underline;">My Profile</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="{% url 'network' user.username %}">
+                    <a class="nav-link " href="{% url 'network' %}">
                         <i class="fe fe-grid"></i><span  style="font-weight: 800; text-decoration: underline;">The Network</span>
                     </a>
                 </li>
@@ -121,7 +121,7 @@
 
                     <!-- Menu -->
                     <div class="dropdown-menu" aria-labelledby="sidebarIconCopy">
-                        <a href="{% url 'edit_profile' request.user.username %}" class="dropdown-item">Profile</a>
+                        <a href="{% url 'edit_profile' %}" class="dropdown-item">Profile</a>
                         <hr class="dropdown-divider">
                         <a href="{% url 'login' %}" class="dropdown-item">Logout</a>
                     </div>
