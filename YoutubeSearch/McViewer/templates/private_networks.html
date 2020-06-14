@@ -12,7 +12,7 @@
       <div class="header">
         <h1 class="header-title">
             Private Networks
-          </h1>
+        </h1>
       </div> <!-- / .header -->
 
     <!-- CONTENT -->
@@ -21,22 +21,29 @@
             <div class="col-12 col-xl-8">
 
                 <!-- Card -->
-                {% for network in networks %}
-                    <div class="card-body">
-                        <div class="row align-items-center">
-                            <div class="col-auto">
+                {% if count > 0 %}
+                    {% for network in networks %}
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
 
                                 <!-- Avatar -->
-                                <a href="{% url 'private_network' network.referral_code %}" class="avatar avatar-lg">
-                                    {{network.title}}
-                                </a>
+                                    <a href="{% url 'private_network' network.referral_code %}" class="avatar avatar-lg">
+                                        {{network.title}}
+                                    </a>
 
-                            </div>
+                                </div>
 
-                        </div> <!-- / .row -->
-                    </div> <!-- / .card-body -->
-                {% endfor %}
+                            </div> <!-- / .row -->
+                        </div> <!-- / .card-body -->
+                    {% endfor %}
 
+                {% else %}
+                <h2 class="header-title">
+                    You aren't in any private networks yet!
+                </h2>
+
+                {% endif %}
             </div>
         </div> <!-- / .row -->
     </div>

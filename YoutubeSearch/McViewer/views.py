@@ -406,9 +406,11 @@ def privateNetworks(request):
 
     print(my_private_networks)
 
+    count = len(my_private_networks)
+
     
     return render (request, 'private_networks.html',{
         'networks':my_private_networks,
-
+        'count':count,
     })
      
