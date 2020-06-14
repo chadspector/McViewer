@@ -13,9 +13,9 @@ from datetime import date
 from .forms import *
 from django.contrib.auth.decorators import login_required
 
-#This method checks whether the user performing the request is authenticated.
-#If they are authenticated, meaning they have signed up for McViewer, they are redirected to their homepage.
-#If they are not authenticated, the welcome page is rendered where the user is give the opportunity to sign up.
+# This method checks whether the user performing the request is authenticated.
+# If they are authenticated, meaning they have signed up for McViewer, they are redirected to their homepage.
+# If they are not authenticated, the welcome page is rendered where the user is give the opportunity to sign up.
 def welcome(request):
     if request.user.is_authenticated:
         return redirect('home_page')
@@ -37,14 +37,14 @@ def index(request):
         'numOfSearches': len(searches)
     })
 
-#This method provides the sign-up logic for McViewer.
-#Upon clicking the sign-up button, all of the user's inputs are received from the sign-up form.
-#Input validation occurs by checking whether the email or username inputted by the user are already in use
-#by filtering through all Users in the database and checking is any User has that particular username or email.
-#If this is the case, the appropriate error message is displayed.
-#If the input validation checks are passed, a User object is created, a UserProfile object is created, the user is 
-#authenticated and logged in.
-#Finally, the user is redirected to their dashboard.
+# This method provides the sign-up logic for McViewer.
+# Upon clicking the sign-up button, all of the user's inputs are received from the sign-up form.
+# Input validation occurs by checking whether the email or username inputted by the user are already in use
+# by filtering through all Users in the database and checking is any User has that particular username or email.
+# If this is the case, the appropriate error message is displayed.
+# If the input validation checks are passed, a User object is created, a UserProfile object is created, the user is 
+# authenticated and logged in.
+# Finally, the user is redirected to their dashboard.
 def signUp(request):
     if request.method == "POST" and "submitProfile" in request.POST:
         the_first_name = request.POST.get("first_name")
@@ -70,14 +70,14 @@ def signUp(request):
         return redirect('home_page')
     return render(request, 'sign_up.html')
 
-#This method provides the sign-in logic for McViewer.
-#Upon clicking the sign-up button, all of the user's inputs are received from the sign-in form.
-#If a User with the inputted email exists, check that the inputted password matches that user's email.
-#If the email and password match, log the user in and send the user to their ddashboard.
-#If the email and password do not match, display an error message to the user telling them that they
-#inputted the wrong password. The user is allowed to try a new password.
-#If there is no User with the inputted email that exists, display an error message to the user telling
-#them that they have inputted an invalid email. The user is allowed to try a new email.
+# This method provides the sign-in logic for McViewer.
+# Upon clicking the sign-up button, all of the user's inputs are received from the sign-in form.
+# If a User with the inputted email exists, check that the inputted password matches that user's email.
+# If the email and password match, log the user in and send the user to their ddashboard.
+# If the email and password do not match, display an error message to the user telling them that they
+# inputted the wrong password. The user is allowed to try a new password.
+# If there is no User with the inputted email that exists, display an error message to the user telling
+# them that they have inputted an invalid email. The user is allowed to try a new email.
 def loginprofile(request):
     if request.method == "POST" and "login" in request.POST:
         the_email = request.POST.get("email")
