@@ -22,8 +22,7 @@ def welcome(request):
 @login_required(login_url='login')
 def index(request):
     user_profile = UserProfile.objects.get(user=request.user)
-    searches = Search.objects.filter(user_profile=user_profile).order_by('date_searched')
-    recent_searches = reversed(searches)
+    recent_searches = Search.objects.filter(user_profile=user_profile).order_by('-date_searched')
     if request.method == "POST" and "logout" in request.POST:
         logout(request)
         return redirect('login')
@@ -270,8 +269,7 @@ def editProfile(request):
 
 @login_required(login_url='login')
 def network(request):
-    searches_wrong_order = Search.objects.all().order_by('date_searched')[:6]
-    searches = reversed(searches_wrong_order)
+    searches = Search.objects.all().order_by('-date_searched')[0:6]
     count = UserProfile.objects.all().count()
     user_profile = UserProfile.objects.get(user = request.user)
     if request.method == "POST" and "join_network" in request.POST:
@@ -325,11 +323,7 @@ def privateNetwork(request, referral_code):
         unsorted_searches = []
         users = network.users.all()
         count = network.users.count()
-        for user in users:
-            for search in Search.objects.filter(user_profile=user):
-                unsorted_searches.append(search)
-        searches_wrong_order = unsorted_searches.order_by('date_searched')[:6]
-        searches = reversed(searches_wrong_order)
+        searches = Search.objects.filter(user_profile__in=users).order_by('-date_searched')[0:6]
         return render(request, 'private_network.html', {
             'searches': searches,
             'network':network,
