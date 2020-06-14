@@ -397,7 +397,7 @@ def privateNetwork(request, referral_code):
 
 @login_required(login_url='login')
 def privateNetworks(request):
-    userprofile = UserProfile.objects.get(user = request.user)
+    userprofile = UserProfile.objects.get(user= request.user)
     all_private_networks = PrivateNetwork.objects.all()
     my_private_networks = set()
     for network in all_private_networks:
