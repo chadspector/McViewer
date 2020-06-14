@@ -67,14 +67,14 @@ def signUp(request):
         return redirect('home_page')
     return render(request, 'sign_up.html')
 
-#This method provides the sign-in logic for McViewer.
-#Upon clicking the "Sign up" button, all of the user's inputs are received from the sign-in form.
-#If a User with the inputted email exists, check that the inputted password matches that user's email.
-#If the email and password match, log the user in and send the user to their ddashboard.
-#If the email and password do not match, display an error message to the user telling them that they
-#inputted the wrong password. The user is allowed to try a new password.
-#If there is no User with the inputted email that exists, display an error message to the user telling
-#them that they have inputted an invalid email. The user is allowed to try a new email.
+# This method provides the sign-in logic for McViewer.
+# Upon clicking the "Sign up" button, all of the user's inputs are received from the sign-in form.
+# If a User with the inputted email exists, check that the inputted password matches that user's email.
+# If the email and password match, log the user in and send the user to their ddashboard.
+# If the email and password do not match, display an error message to the user telling them that they
+# inputted the wrong password. The user is allowed to try a new password.
+# If there is no User with the inputted email that exists, display an error message to the user telling
+# them that they have inputted an invalid email. The user is allowed to try a new email.
 def loginprofile(request):
     logout(request)
     if request.method == "POST" and "login" in request.POST:
@@ -94,12 +94,12 @@ def loginprofile(request):
 
     return render(request, 'sign_in.html')
 
-#This method allows you to search for a Youtube video based on the user's search input.
-#Upon entering a search, we make an API call to Youtube's API.
-#We then obtain all the videos obtained from the getSearchedVideos method.
-#A Search object is only created if a Search object associated with that user profile and the title or search text provided doesn't already exist.
-#If the user already has 3 searches, it will delete the least recently created Search.
-#The first video result is displayed in large with the other video results displayed on the side.
+# This method allows you to search for a Youtube video based on the user's search input.
+# Upon entering a search, we make an API call to Youtube's API.
+# We then obtain all the videos obtained from the getSearchedVideos method.
+# A Search object is only created if a Search object associated with that user profile and the title or search text provided doesn't already exist.
+# If the user already has 3 searches, it will delete the least recently created Search.
+# The first video result is displayed in large with the other video results displayed on the side.
 @login_required(login_url='login')
 def searchResult(request):
     try:
@@ -140,12 +140,12 @@ def searchResult(request):
     except:
         return redirect('home_page')
 
-#This method retrieves the video results based on the search provided on the home page.
-#It makes an API call to Youtube's API.
-#We first retrieve all video results obtained by the search and
-#make a list of all the video IDs from each video.
-#We then obtain all the necessary information for each video (title, ID, duration, thumbnail).
-#These videos obtained are then returned to the SearchResult method so they can be rendered in the template.  
+# This method retrieves the video results based on the search provided on the home page.
+# It makes an API call to Youtube's API.
+# We first retrieve all video results obtained by the search and
+# make a list of all the video IDs from each video.
+# We then obtain all the necessary information for each video (title, ID, duration, thumbnail).
+# These videos obtained are then returned to the SearchResult method so they can be rendered in the template.  
 def getSearchedVideos(search, numResults):
     search_url = 'https://www.googleapis.com/youtube/v3/search'
     video_url = 'https://www.googleapis.com/youtube/v3/videos'
@@ -186,11 +186,11 @@ def getSearchedVideos(search, numResults):
     
     return videos
 
-#This method returns all the videos related to the video clicked on either the home page or the search page.
-#We make an API call to Youtube's API.
-#We first retrieve all the video results based on the ID given by the video clicked.
-#We then obtain all the necessary information for each video (title, ID, duration, thumbnail).
-#The video clicked is then displayed in large with all the other related videos on the side in the template.
+# This method returns all the videos related to the video clicked on either the home page or the search page.
+# We make an API call to Youtube's API.
+# We first retrieve all the video results based on the ID given by the video clicked.
+# We then obtain all the necessary information for each video (title, ID, duration, thumbnail).
+# The video clicked is then displayed in large with all the other related videos on the side in the template.
 @login_required(login_url='login')
 def getRelatedSearch(request, id):
     try:    
@@ -281,11 +281,11 @@ def getRelatedSearch(request, id):
     except:
         return redirect('home_page')
     
-#This method allows the user to change certain user features, such as their first name, last name, email,
-#and display picture.
-#Upon clicking the "Save Changes" button, all of the user's inputs are received from the edit profile form.
-#The new email inputted by the user is validated by checking the database to see if that email is already in use.
-#The User and UserProfile objects are modified with the desired changes.
+# This method allows the user to change certain user features, such as their first name, last name, email,
+# and display picture.
+# Upon clicking the "Save Changes" button, all of the user's inputs are received from the edit profile form.
+# The new email inputted by the user is validated by checking the database to see if that email is already in use.
+# The User and UserProfile objects are modified with the desired changes.
 @login_required(login_url='login')
 def editProfile(request):
     user = request.user
@@ -317,22 +317,22 @@ def editProfile(request):
         return redirect('home_page')
     return render(request, 'edit_profile.html')
 
-#This method renders the global McViewer network.
-#All of the Search objects in the database are ordered in order of most recent to least recent.
-#The 6 most recent searches by anyone in the McViewer database are displayed to the user,
-#along with the Search text, the title and thumbnail of the first video obtained
-#by the search, and the member of the Private Network that did the search.
-#The user is also given the option to join a private network should they have the corresponding referral code.
-#Upon clicking the "Join Network" button, the referral code inputted by the user is recevied from the join network form.
-#If a Private Network with this referral code exists, the method checks if the user is already in that Private Network.
-#If the user is already a part of that Private Network, an error message is displayed telling the user that they 
-#cannot rejoin a private network.
-#If the user is not part of the Private Network, they are added to the Private Network and redirected to the homepage
-#of the newly-joined Private Network.
-#If a Private Network with this referral code does not exist, an error message is displayed telling the user that 
-#no private network with this referral code exists.
-#From this page, the user is also given the option to create a new private network.
-#If they click this button, the user is redirected to the create private network page.
+# This method renders the global McViewer network.
+# All of the Search objects in the database are ordered in order of most recent to least recent.
+# The 6 most recent searches by anyone in the McViewer database are displayed to the user,
+# along with the Search text, the title and thumbnail of the first video obtained
+# by the search, and the member of the Private Network that did the search.
+# The user is also given the option to join a private network should they have the corresponding referral code.
+# Upon clicking the "Join Network" button, the referral code inputted by the user is recevied from the join network form.
+# If a Private Network with this referral code exists, the method checks if the user is already in that Private Network.
+# If the user is already a part of that Private Network, an error message is displayed telling the user that they 
+# cannot rejoin a private network.
+# If the user is not part of the Private Network, they are added to the Private Network and redirected to the homepage
+# of the newly-joined Private Network.
+# If a Private Network with this referral code does not exist, an error message is displayed telling the user that 
+# no private network with this referral code exists.
+# From this page, the user is also given the option to create a new private network.
+# If they click this button, the user is redirected to the create private network page.
 @login_required(login_url='login')
 def network(request):
     searches = Search.objects.all().order_by('-date_searched')[0:6]
@@ -365,13 +365,13 @@ def network(request):
         'count':count,
         })
 
-#This method allows the user to create their own custom private network.
-#Upon clicking the "Create Network" button, the referral code and network name inputted by the user
-#is received from the create network form.
-#If a Private Network with this referral code already exists, an error message is displayed informing the user 
-#that they cannot create this private network as Private Networks cannot have duplicate referral codes.
-#Otherwise, a Private Network object is created, and the creator is automatically added to the private network.
-#The user is then redirected to the private network's page.
+# This method allows the user to create their own custom private network.
+# Upon clicking the "Create Network" button, the referral code and network name inputted by the user
+# is received from the create network form.
+# If a Private Network with this referral code already exists, an error message is displayed informing the user 
+# that they cannot create this private network as Private Networks cannot have duplicate referral codes.
+# Otherwise, a Private Network object is created, and the creator is automatically added to the private network.
+# The user is then redirected to the private network's page.
 @login_required(login_url='login')
 def createNetwork(request):
     user_profile = UserProfile.objects.get(user = request.user)
