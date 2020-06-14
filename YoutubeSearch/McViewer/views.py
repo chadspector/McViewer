@@ -295,7 +295,7 @@ def editProfile(request):
     if request.method == "POST" and "editProfile" in request.POST:
         the_first_name = request.POST.get("first_name")
         the_last_name = request.POST.get("last_name")
-        new_email = request.POST.get("email")
+        the_email = request.POST.get("email")
 
         if User.objects.filter(email=the_email).exists():
             context = {'error':'The email you entered has already been taken. Please try another email.'}
@@ -397,7 +397,7 @@ def privateNetwork(request, referral_code):
 
 @login_required(login_url='login')
 def privateNetworks(request):
-    userprofile = UserProfile.objects.get(user = request.user)
+    userprofile = UserProfile.objects.get(user= request.user)
     all_private_networks = PrivateNetwork.objects.all()
     my_private_networks = set()
     for network in all_private_networks:
