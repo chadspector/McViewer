@@ -13,9 +13,9 @@ from datetime import date
 from .forms import *
 from django.contrib.auth.decorators import login_required
 
-#This method checks whether the user performing the request is authenticated.
-#If they are authenticated, meaning they have signed up for McViewer, they are redirected to their homepage.
-#If they are not authenticated, the welcome page is rendered where the user is give the opportunity to sign up.
+# This method checks whether the user performing the request is authenticated.
+# If they are authenticated, meaning they have signed up for McViewer, they are redirected to their homepage.
+# If they are not authenticated, the welcome page is rendered where the user is give the opportunity to sign up.
 def welcome(request):
     if request.user.is_authenticated:
         return redirect('home_page')
@@ -27,22 +27,24 @@ def welcome(request):
 @login_required(login_url='login')
 def index(request):
     user_profile = UserProfile.objects.get(user=request.user)
-    searches = Search.objects.filter(user_profile=user_profile).order_by('date_searched')
-    recent_searches = reversed(searches)
+    recent_searches = Search.objects.filter(user_profile=user_profile).order_by('-date_searched')
+    if request.method == "POST" and "logout" in request.POST:
+        logout(request)
+        return redirect('login')
     return render(request, 'home_page.html', {
         'userprofile': user_profile,
         'recentSearches': recent_searches,
-        'numOfSearches': len(searches)
+        'numOfSearches': len(recent_searches)
     })
 
-#This method provides the sign-up logic for McViewer.
-#Upon clicking the sign-up button, all of the user's inputs are received from the sign-up form.
-#Input validation occurs by checking whether the email or username inputted by the user are already in use
-#by filtering through all Users in the database and checking is any User has that particular username or email.
-#If this is the case, the appropriate error message is displayed.
-#If the input validation checks are passed, a User object is created, a UserProfile object is created, the user is 
-#authenticated and logged in.
-#Finally, the user is redirected to their dashboard.
+# This method provides the sign-up logic for McViewer.
+# Upon clicking the sign-up button, all of the user's inputs are received from the sign-up form.
+# Input validation occurs by checking whether the email or username inputted by the user are already in use
+# by filtering through all Users in the database and checking is any User has that particular username or email.
+# If this is the case, the appropriate error message is displayed.
+# If the input validation checks are passed, a User object is created, a UserProfile object is created, the user is 
+# authenticated and logged in.
+# Finally, the user is redirected to their dashboard.
 def signUp(request):
     if request.method == "POST" and "submitProfile" in request.POST:
         the_first_name = request.POST.get("first_name")
@@ -94,6 +96,7 @@ def loginprofile(request):
 
     return render(request, 'sign_in.html')
 
+#
 @login_required(login_url='login')
 def searchResult(request):
     try:
@@ -312,8 +315,7 @@ def editProfile(request):
 #If they click this button, the user is redirected to the create private network page.
 @login_required(login_url='login')
 def network(request):
-    searches_wrong_order = Search.objects.all().order_by('date_searched')[:6]
-    searches = reversed(searches_wrong_order)
+    searches = Search.objects.all().order_by('-date_searched')[0:6]
     count = UserProfile.objects.all().count()
     user_profile = UserProfile.objects.get(user = request.user)
     if request.method == "POST" and "join_network" in request.POST:
@@ -343,7 +345,7 @@ def network(request):
         'count':count,
         })
 
-
+#This method 
 @login_required(login_url='login')
 def createNetwork(request):
     user_profile = UserProfile.objects.get(user = request.user)
@@ -368,11 +370,7 @@ def privateNetwork(request, referral_code):
         unsorted_searches = []
         users = network.users.all()
         count = network.users.count()
-        for user in users:
-            for search in Search.objects.filter(user_profile=user):
-                unsorted_searches.append(search)
-            searches_wrong_order = unsorted_searches.order_by('date_searched')[:6]
-            searches = reversed(searches_wrong_order)
+        searches = Search.objects.filter(user_profile__in=users).order_by('-date_searched')[0:6]
         return render(request, 'private_network.html', {
             'searches': searches,
             'network':network,
@@ -380,3 +378,21 @@ def privateNetwork(request, referral_code):
             })
     except:
         return redirect('network')
+
+@login_required(login_url='login')
+def privateNetworks(request):
+    userprofile = UserProfile.objects.get(user = request.user)
+    all_private_networks = PrivateNetwork.objects.all()
+    my_private_networks = set()
+    for network in all_private_networks:
+        if userprofile in network.users.all():
+            my_private_networks.add(network)
+
+    print(my_private_networks)
+
+    
+    return render (request, 'private_networks.html',{
+        'networks':my_private_networks,
+
+    })
+     
