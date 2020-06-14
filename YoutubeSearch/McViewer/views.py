@@ -28,9 +28,6 @@ def welcome(request):
 def index(request):
     user_profile = UserProfile.objects.get(user=request.user)
     recent_searches = Search.objects.filter(user_profile=user_profile).order_by('-date_searched')
-    if request.method == "POST" and "logout" in request.POST:
-        logout(request)
-        return redirect('login')
     return render(request, 'home_page.html', {
         'userprofile': user_profile,
         'recentSearches': recent_searches,
@@ -79,6 +76,7 @@ def signUp(request):
 #If there is no User with the inputted email that exists, display an error message to the user telling
 #them that they have inputted an invalid email. The user is allowed to try a new email.
 def loginprofile(request):
+    logout(request)
     if request.method == "POST" and "login" in request.POST:
         the_email = request.POST.get("email")
         raw_password = request.POST.get("password")
@@ -292,12 +290,17 @@ def getRelatedSearch(request, id):
 def editProfile(request):
     user = request.user
     user_profile = UserProfile.objects.get(user=user)
+    original_username = user.username
+    original_email = user.email
     if request.method == "POST" and "editProfile" in request.POST:
-        the_first_name = request.POST.get("first_name")
-        the_last_name = request.POST.get("last_name")
+        the_username = request.POST.get("username")
         the_email = request.POST.get("email")
 
-        if User.objects.filter(email=the_email).exists():
+        if User.objects.filter(username=the_username).exists() and original_username != the_username:
+            context = {'error':'The username you entered has already been taken. Please try another username.'}
+            return render(request, 'edit_profile.html', context)
+
+        if User.objects.filter(email=the_email).exists() and original_email != the_email:
             context = {'error':'The email you entered has already been taken. Please try another email.'}
             return render(request, 'edit_profile.html', context)
 
@@ -307,8 +310,7 @@ def editProfile(request):
             display_picture = form.cleaned_data['image']
             user_profile.display_picture = display_picture
         
-        user.first_name = the_first_name
-        user.last_name = the_last_name
+        user.username = the_username
         user.email = the_email
         user.save()
         user_profile.save()

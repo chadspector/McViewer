@@ -42,20 +42,32 @@
       {% csrf_token %}
       <div class="form-row">
         <div class="col-12 col-md-6 mb-3">
-          <label for="validationServer01">First name</label>
-          <input value="{{request.user.first_name}}" name="first_name" type="text" class="form-control is-valid"
-            id="validationServer01" placeholder="First name" required>
+          <label for="validationServer01">First Name</label>
+            <br>
+            <h3>
+            {{request.user.first_name}}
+            </h3>
           <div class="valid-feedback">
           </div>
         </div>
         <div class="col-12 col-md-6 mb-3">
           <label for="validationServer02">Last name</label>
-          <input name="last_name" value="{{request.user.last_name}}" type="text" class="form-control is-valid"
-            id="validationServer02" placeholder="Last name" required>
+          <br>
+          <h3>
+            {{request.user.last_name}}
+          </h3>
           <div class="valid-feedback">
           </div>
         </div>
       </div>
+      <div class="form-row">
+        <div class="col-12 col-md-6 mb-3">
+          <label for="validationServer03">Username</label>
+          <input name="username" value="{{request.user.username}}" class="form-control is-valid"
+            id="validationServer02" placeholder="Username" required>
+          <div class="valid-feedback">
+          </div>
+        </div>
       <div class="form-row">
         <div class="col-12 col-md-6 mb-3">
           <label for="validationServer03">Email</label>
@@ -84,6 +96,7 @@
 
       </div>
       {% endif %}
+      <br>
     
       <!-- Button -->
       <button class="btn btn-primary" name="editProfile" type="submit">Save Changes</button>
