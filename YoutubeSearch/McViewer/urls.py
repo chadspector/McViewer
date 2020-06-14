@@ -17,5 +17,4 @@ urlpatterns = [
     path('network', views.network, name = "network"),
     path('network/<str:referral_code>', views.privateNetwork, name = "private_network"),
     path('create-network', views.createNetwork, name = "create_network"),
-    path('private-networks', views.privateNetworks, name = "private_networks"),
 ]

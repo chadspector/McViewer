@@ -94,12 +94,12 @@ def loginprofile(request):
 
     return render(request, 'sign_in.html')
 
-# This method allows you to search for a Youtube video based on the user's search input.
-# Upon entering a search, we make an API call to Youtube's API.
-# We then obtain all the videos obtained from the getSearchedVideos method.
-# A Search object is only created if a Search object associated with that user profile and the title or search text provided doesn't already exist.
-# If the user already has 3 searches, it will delete the least recently created Search
-# The first video result is displayed in large with the other video results displayed on the side
+#This method allows you to search for a Youtube video based on the user's search input.
+#Upon entering a search, we make an API call to Youtube's API.
+#We then obtain all the videos obtained from the getSearchedVideos method.
+#A Search object is only created if a Search object associated with that user profile and the title or search text provided doesn't already exist.
+#If the user already has 3 searches, it will delete the least recently created Search.
+#The first video result is displayed in large with the other video results displayed on the side.
 @login_required(login_url='login')
 def searchResult(request):
     try:
@@ -140,12 +140,12 @@ def searchResult(request):
     except:
         return redirect('home_page')
 
-# This method retrieves the video results based on the search provided on the home page
-# It makes an API call to Youtube's API
-# We first retrieve all video results obtained by the search and
-# Make a list of all the video ids from each video
-# We then obtain all the necessary information for each video (title, id, duration, thumbnail)
-# These videos obtained are then returned to the SearchResult method so they can be rendered in the template   
+#This method retrieves the video results based on the search provided on the home page.
+#It makes an API call to Youtube's API.
+#We first retrieve all video results obtained by the search and
+#make a list of all the video IDs from each video.
+#We then obtain all the necessary information for each video (title, ID, duration, thumbnail).
+#These videos obtained are then returned to the SearchResult method so they can be rendered in the template.  
 def getSearchedVideos(search, numResults):
     search_url = 'https://www.googleapis.com/youtube/v3/search'
     video_url = 'https://www.googleapis.com/youtube/v3/videos'
@@ -186,11 +186,11 @@ def getSearchedVideos(search, numResults):
     
     return videos
 
-# This method returns all the videos related to the video clicked on either the home page or the search page
-# We make an API call to Youtube's API
-# We first retrieve all the video results based on the id given by the video clicked
-# We then obtain all the necessary information for each video (title, id, duration, thumbnail)
-# The video clicked is then displayed in large with all the other related videos on the side in the template 
+#This method returns all the videos related to the video clicked on either the home page or the search page.
+#We make an API call to Youtube's API.
+#We first retrieve all the video results based on the ID given by the video clicked.
+#We then obtain all the necessary information for each video (title, ID, duration, thumbnail).
+#The video clicked is then displayed in large with all the other related videos on the side in the template.
 @login_required(login_url='login')
 def getRelatedSearch(request, id):
     try:    
@@ -363,7 +363,8 @@ def network(request):
         'count':count,
         })
 
-#This method 
+#This method allows the user to create their own custom private network.
+#
 @login_required(login_url='login')
 def createNetwork(request):
     user_profile = UserProfile.objects.get(user = request.user)
@@ -396,25 +397,6 @@ def privateNetwork(request, referral_code):
             })
     except:
         return redirect('network')
-
-@login_required(login_url='login')
-def privateNetworks(request):
-    userprofile = UserProfile.objects.get(user= request.user)
-    all_private_networks = PrivateNetwork.objects.all()
-    my_private_networks = set()
-    for network in all_private_networks:
-        if userprofile in network.users.all():
-            my_private_networks.add(network)
-
-    print(my_private_networks)
-
-    count = len(my_private_networks)
-
-    
-    return render (request, 'private_networks.html',{
-        'networks':my_private_networks,
-        'count':count,
-    })
 
 
      
