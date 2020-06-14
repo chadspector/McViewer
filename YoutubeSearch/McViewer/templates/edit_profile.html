@@ -73,8 +73,18 @@
           </div>
         </div>
       </div>
-      {{error}}
-      <br>
+      {% if error %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{error}}
+
+        <!-- Button -->
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+
+      </div>
+      {% endif %}
+    
       <!-- Button -->
       <button class="btn btn-primary" name="editProfile" type="submit">Save Changes</button>
     </form>
