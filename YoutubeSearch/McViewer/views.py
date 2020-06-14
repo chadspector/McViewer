@@ -295,7 +295,7 @@ def editProfile(request):
     if request.method == "POST" and "editProfile" in request.POST:
         the_first_name = request.POST.get("first_name")
         the_last_name = request.POST.get("last_name")
-        new_email = request.POST.get("email")
+        the_email = request.POST.get("email")
 
         if User.objects.filter(email=the_email).exists():
             context = {'error':'The email you entered has already been taken. Please try another email.'}
@@ -309,7 +309,7 @@ def editProfile(request):
         
         user.first_name = the_first_name
         user.last_name = the_last_name
-        user.email = new_email
+        user.email = the_email
         user.save()
         user_profile.save()
         return redirect('home_page')
@@ -413,4 +413,6 @@ def privateNetworks(request):
         'networks':my_private_networks,
         'count':count,
     })
+
+
      
