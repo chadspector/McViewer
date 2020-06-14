@@ -10,10 +10,19 @@
     <!-- Body -->
     <div class="header-body">
       <div class="row align-items-end">
-        <div class="col">
+        <div class="d-flex justify-content-flex-start align-items-flex-end">
+
+          <div >
+
+            <!-- Avatar -->
+            <div class="avatar avatar-xxl header-avatar-top">
+              <img src="{{ request.user.userprofile.display_picture.url }}" alt="..." class="avatar-img rounded-circle border border-4 border-body">
+            </div>
+
+          </div>
 
           <!-- Title -->
-          <h1 class="header-title">
+          <h1 class="header-title" style="margin-top: 3.5em; margin-left: 1em;">
             My Profile
           </h1>
 
@@ -64,8 +73,18 @@
           </div>
         </div>
       </div>
-      {{error}}
-      <br>
+      {% if error %}
+      <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{error}}
+
+        <!-- Button -->
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+
+      </div>
+      {% endif %}
+    
       <!-- Button -->
       <button class="btn btn-primary" name="editProfile" type="submit">Save Changes</button>
     </form>

@@ -309,7 +309,7 @@ def editProfile(request):
         
         user.first_name = the_first_name
         user.last_name = the_last_name
-        user.email = new_email
+        user.email = the_email
         user.save()
         user_profile.save()
         return redirect('home_page')
@@ -413,4 +413,6 @@ def privateNetworks(request):
         'networks':my_private_networks,
         'count':count,
     })
+
+
      
