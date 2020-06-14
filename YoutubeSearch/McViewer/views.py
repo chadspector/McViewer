@@ -319,7 +319,9 @@ def editProfile(request):
 
 #This method renders the global McViewer network.
 #All of the Search objects in the database are ordered in order of most recent to least recent.
-#The 6 most recent searches by anyone in the McViewer database are displayed to the user.
+#The 6 most recent searches by anyone in the McViewer database are displayed to the user,
+#along with the Search text, the title and thumbnail of the first video obtained
+#by the search, and the member of the Private Network that did the search.
 #The user is also given the option to join a private network should they have the corresponding referral code.
 #Upon clicking the "Join Network" button, the referral code inputted by the user is recevied from the join network form.
 #If a Private Network with this referral code exists, the method checks if the user is already in that Private Network.
@@ -364,7 +366,12 @@ def network(request):
         })
 
 #This method allows the user to create their own custom private network.
-#
+#Upon clicking the "Create Network" button, the referral code and network name inputted by the user
+#is received from the create network form.
+#If a Private Network with this referral code already exists, an error message is displayed informing the user 
+#that they cannot create this private network as Private Networks cannot have duplicate referral codes.
+#Otherwise, a Private Network object is created, and the creator is automatically added to the private network.
+#The user is then redirected to the private network's page.
 @login_required(login_url='login')
 def createNetwork(request):
     user_profile = UserProfile.objects.get(user = request.user)
@@ -382,6 +389,10 @@ def createNetwork(request):
             return redirect('private_network', referral_code = the_referral_code)
     return render(request, 'create_network.html')
 
+#This method renders a private McViewer network.
+#All of the Search objects stemming from users in the Private Network are ordered in order of most recent to least recent.
+#The last 6 Search objects are displayed, along with the Search text, the title and thumbnail of the first video obtained
+#by the search, and the member of the Private Network that did the search.
 @login_required(login_url='login')
 def privateNetwork(request, referral_code):
     try:
