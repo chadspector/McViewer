@@ -9,12 +9,27 @@
 
     
 
-    <!-- HEADER -->
-    <div class="header">
-      <h1 class="header-title">
-        {{network.title}}
-      </h1>
-    </div> <!-- / .header -->
+   <!-- HEADER -->
+   <div class="header">
+    <div class="container-fluid">
+
+        <!-- Body -->
+        <div class="header-body">
+            <div class="row align-items-end">
+                <div class="col">
+
+                    <!-- Title -->
+                    <h1 class="header-title">
+                        {{network.title}}
+                    </h1>
+
+                </div>
+
+            </div> <!-- / .row -->
+        </div> <!-- / .header-body -->
+
+    </div>
+</div> <!-- / .header -->
 
     <!-- CONTENT -->
     <div class="container-fluid">
@@ -47,7 +62,10 @@
                     {{ search.title }}
                   </p>
 
-                  
+                  <!-- Text -->
+                  <p class="card-text small text-muted mb-1">
+                    Searched by: {{ search.user_profile.user.username }}
+                  </p>
 
                 </div>
                 
@@ -99,7 +117,7 @@
 
                       <!-- Time -->
                       <time class="small text-muted" datetime="2018-10-28">
-                        {{network.date_created}}
+                        {{network.date_created|date:"F d, Y"}}
                       </time>
 
                     </div>
