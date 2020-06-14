@@ -69,7 +69,7 @@ def signUp(request):
     return render(request, 'sign_up.html')
 
 #This method provides the sign-in logic for McViewer.
-#Upon clicking the sign-up button, all of the user's inputs are received from the sign-in form.
+#Upon clicking the "Sign up" button, all of the user's inputs are received from the sign-in form.
 #If a User with the inputted email exists, check that the inputted password matches that user's email.
 #If the email and password match, log the user in and send the user to their ddashboard.
 #If the email and password do not match, display an error message to the user telling them that they
@@ -264,7 +264,11 @@ def getRelatedSearch(request, id):
     except:
         return redirect('home_page')
     
-#
+#This method allows the user to change certain user features, such as their first name, last name, email,
+#and display picture.
+#Upon clicking the "Save Changes" button, all of the user's inputs are received from the edit profile form.
+#The new email inputted by the user is validated by checking the database to see if that email is already in use.
+#The User and UserProfile objects are modified with the desired changes.
 @login_required(login_url='login')
 def editProfile(request):
     user = request.user
@@ -274,7 +278,7 @@ def editProfile(request):
         the_last_name = request.POST.get("last_name")
         new_email = request.POST.get("email")
 
-        if User.objects.filter(email=new_email).exists():
+        if User.objects.filter(email=the_email).exists():
             context = {'error':'The email you entered has already been taken. Please try another email.'}
             return render(request, 'edit_profile.html', context)
 
@@ -292,6 +296,20 @@ def editProfile(request):
         return redirect('home_page')
     return render(request, 'edit_profile.html')
 
+#This method renders the global McViewer network.
+#All of the Search objects in the database are ordered in order of most recent to least recent.
+#The 6 most recent searches by anyone in the McViewer database are displayed to the user.
+#The user is also given the option to join a private network should they have the corresponding referral code.
+#Upon clicking the "Join Network" button, the referral code inputted by the user is recevied from the join network form.
+#If a Private Network with this referral code exists, the method checks if the user is already in that Private Network.
+#If the user is already a part of that Private Network, an error message is displayed telling the user that they 
+#cannot rejoin a private network.
+#If the user is not part of the Private Network, they are added to the Private Network and redirected to the homepage
+#of the newly-joined Private Network.
+#If a Private Network with this referral code does not exist, an error message is displayed telling the user that 
+#no private network with this referral code exists.
+#From this page, the user is also given the option to create a new private network.
+#If they click this button, the user is redirected to the create private network page.
 @login_required(login_url='login')
 def network(request):
     searches_wrong_order = Search.objects.all().order_by('date_searched')[:6]
@@ -325,6 +343,7 @@ def network(request):
         'count':count,
         })
 
+
 @login_required(login_url='login')
 def createNetwork(request):
     user_profile = UserProfile.objects.get(user = request.user)
@@ -344,8 +363,7 @@ def createNetwork(request):
 
 @login_required(login_url='login')
 def privateNetwork(request, referral_code):
-    #try:
-    if 1<2:
+    try:
         network = PrivateNetwork.objects.get(referral_code = referral_code)
         unsorted_searches = []
         users = network.users.all()
@@ -353,20 +371,12 @@ def privateNetwork(request, referral_code):
         for user in users:
             for search in Search.objects.filter(user_profile=user):
                 unsorted_searches.append(search)
-        
-        print("%#######")
-        print(len(unsorted_searches))
-        if len(unsorted_searches) > 1:
             searches_wrong_order = unsorted_searches.order_by('date_searched')[:6]
             searches = reversed(searches_wrong_order)
-        else:
-            searches = []
-            for search in unsorted_searches:
-                searches.add(search)
         return render(request, 'private_network.html', {
             'searches': searches,
             'network':network,
             'count':count,
             })
-    #except:
-     #   return redirect('network')
+    except:
+        return redirect('network')
