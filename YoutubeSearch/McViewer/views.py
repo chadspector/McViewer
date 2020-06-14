@@ -13,12 +13,17 @@ from datetime import date
 from .forms import *
 from django.contrib.auth.decorators import login_required
 
-
+#This method checks whether the user performing the request is authenticated.
+#If they are authenticated, meaning they have signed up for McViewer, they are redirected to their homepage.
+#If they are not authenticated, the welcome page is rendered where the user is give the opportunity to sign up.
 def welcome(request):
     if request.user.is_authenticated:
         return redirect('home_page')
     return render(request, "welcome.html")
 
+#This method renders the user's dashboard upon sign-in. 
+#The user's 3 most recent searches are displayed by filtering all Search objects attached to this specific user
+#and then ordering them by how recent the Search objects were created.
 @login_required(login_url='login')
 def index(request):
     user_profile = UserProfile.objects.get(user=request.user)
@@ -32,6 +37,14 @@ def index(request):
         'numOfSearches': len(searches)
     })
 
+#This method provides the sign-up logic for McViewer.
+#Upon clicking the sign-up button, all of the user's inputs are received from the sign-up form.
+#Input validation occurs by checking whether the email or username inputted by the user are already in use
+#by filtering through all Users in the database and checking is any User has that particular username or email.
+#If this is the case, the appropriate error message is displayed.
+#If the input validation checks are passed, a User object is created, a UserProfile object is created, the user is 
+#authenticated and logged in.
+#Finally, the user is redirected to their dashboard.
 def signUp(request):
     if request.method == "POST" and "submitProfile" in request.POST:
         the_first_name = request.POST.get("first_name")
@@ -57,6 +70,14 @@ def signUp(request):
         return redirect('home_page')
     return render(request, 'sign_up.html')
 
+#This method provides the sign-in logic for McViewer.
+#Upon clicking the sign-up button, all of the user's inputs are received from the sign-in form.
+#If a User with the inputted email exists, check that the inputted password matches that user's email.
+#If the email and password match, log the user in and send the user to their ddashboard.
+#If the email and password do not match, display an error message to the user telling them that they
+#inputted the wrong password. The user is allowed to try a new password.
+#If there is no User with the inputted email that exists, display an error message to the user telling
+#them that they have inputted an invalid email. The user is allowed to try a new email.
 def loginprofile(request):
     if request.method == "POST" and "login" in request.POST:
         the_email = request.POST.get("email")
@@ -73,7 +94,6 @@ def loginprofile(request):
             context = {'error':'You have entered an invalid email.'}
             return render(request, 'sign_in.html', context)
 
-    logout(request)
     return render(request, 'sign_in.html')
 
 @login_required(login_url='login')
@@ -246,7 +266,7 @@ def getRelatedSearch(request, id):
     except:
         return redirect('home_page')
     
-
+#
 @login_required(login_url='login')
 def editProfile(request):
     user = request.user
@@ -254,6 +274,12 @@ def editProfile(request):
     if request.method == "POST" and "editProfile" in request.POST:
         the_first_name = request.POST.get("first_name")
         the_last_name = request.POST.get("last_name")
+        new_email = request.POST.get("email")
+
+        if User.objects.filter(email=new_email).exists():
+            context = {'error':'The email you entered has already been taken. Please try another email.'}
+            return render(request, 'edit_profile.html', context)
+
         form = ImageUploadForm(request.POST, request.FILES)
         
         if form.is_valid():
@@ -262,6 +288,7 @@ def editProfile(request):
         
         user.first_name = the_first_name
         user.last_name = the_last_name
+        user.email = new_email
         user.save()
         user_profile.save()
         return redirect('home_page')
@@ -331,3 +358,4 @@ def privateNetwork(request, referral_code):
             })
     except:
         return redirect('network')
+     
